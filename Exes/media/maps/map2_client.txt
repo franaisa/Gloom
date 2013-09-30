@@ -418,129 +418,79 @@ Map = {
 		target = {-233.0, 2, 116.0},
 	},
 	
-	Light1= {
-		type = "TriggerLight",
-		controlledByManager = true,
-		on = false,
-		model = "archangel.mesh",
-		lightType = "point",
-		position = {-52.0654, 60.1029, -108.08},
-		color = {1.0, 0.0, 0.0},
-		attenuation = {1.0, 0.001, 0.0001},
-
-		physic_group = 18,
-		physic_groupList = "1",
-		physic_trigger = true,
-		physic_entityList = "
-			physic_position = 50	0	0
-			physic_shape = sphere
-			physic_radius = 10
-
-			physic_position = -40	20	3
-			physic_shape = box
-			physic_dimensions = 3.0	8.0 	3.0
-		",
-	},
-	
-	Light2 = {
+	Light = {
 		type = "Light",
-		lightType = "point",
+		lightType = "directional",
 		position = {-97.9955, 68.2714, -211.816},
 		direction = {0.0, -1.0, 0.0},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
+		color = {0.5, 0.5, 0.5},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
+		lightGroup = 2,
+		lightIsStatic = true,
 	},
 	
-	Light3 = {
-		type = "Light",
-		lightType = "point",
-		position = {12.4903, 59.4316, -212.197},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
+	LavaSound1 = {
+		type = "AmbientSound",
+		position = {-6.34871, 1.65, -71.602},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
 	},
 	
-	Light4 = {
-		type = "Light",
-		lightType = "point",
-		position = {179.721, 109.467, -132.365},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
+	LavaSound2 = {
+		type = "AmbientSound",
+		position = {-123.08, 1.65, -64.36},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound3 = {
+		type = "AmbientSound",
+		position = {-225.305, 1.65, -60.94},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound4 = {
+		type = "AmbientSound",
+		position = {-324.381, 1.65, -56.35},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	Fan = {
+		type = "AmbientSound",
+		position = {192.972, 88.67, -67.08},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient1 = {
+		type = "AmbientSound",
+		position = {121.414, 3.0115, -230.99},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient2 = {
+		type = "AmbientSound",
+		position = {-51.9089, 47.9726, -241.786},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
 	},
 
-	Light5 = {
-		type = "Light",
-		lightType = "point",
-		position = {248.83, 109.446, -97.621},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
+	Ambient3 = {
+		type = "AmbientSound",
+		position = {-400.232, 74.89, -73.5654},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
 	},
 	
-	Light6 = {
-		type = "Light",
-		lightType = "point",
-		position = {167.527, 109.411, -0.0937823},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
+	Ambient4 = {
+		type = "AmbientSound",
+		position = {-34.8509, 78.4421, 58.429},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
 	},
-	
-	Light7 = {
-		type = "Light",
-		lightType = "point",
-		position = {-6.62075, 88.5311, 27.7032},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light8 = {
-		type = "Light",
-		lightType = "point",
-		position = {-230.292, 88.7531, 27.6848},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light9 = {
-		type = "Light",
-		lightType = "point",
-		position = {-389.545, 76.2065, -41.9835},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light10 = {
-		type = "Light",
-		lightType = "point",
-		position = {-389.207, 76.2065, -123.052},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light11 = {
-		type = "Light",
-		lightType = "point",
-		position = {-38.4059, 4.3946, 24.2108},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light12 = {
-		type = "Light",
-		lightType = "point",
-		position = {-152.006, 4.39868, 24.6323},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
+
 }
