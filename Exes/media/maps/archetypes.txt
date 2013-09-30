@@ -416,7 +416,7 @@ Map = {
 		type = "IronHellGoatItem",
 		msgList= "14,15,16,17,29",
 		
-		model = "rocketLauncher.mesh",
+		model = "ironHellGoat.mesh",
 		id = "weapon",
 		weaponType = 4,
 		reward = 10,
@@ -1314,8 +1314,8 @@ Map = {
 	
 	IronHellGoat = {
 		type = "ironHellGoat",
-		Model = "rocketLauncher.mesh",
-		Yaw = 3.14,
+		Model = "ironHellGoat.mesh",
+		Yaw = 0.0,
 		Pitch = -0.0,
 		Offset = {3.0,-4.5,-4.0},
 		PrimaryFireCooldown = 0.75,
