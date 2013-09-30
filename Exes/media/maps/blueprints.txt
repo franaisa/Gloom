@@ -34,9 +34,9 @@ LifeDome CLifeDome CPhysicDynamicEntity CParticleSystem
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity
 TestGround CGraphicPlane CPhysicStaticEntity
-Light CLight CGraphics
-MovableLight CDynamicLight CGraphics
-TriggerLight CLight CGraphics CPhysicStaticCompound
+Light CLight
+MovableLight CDynamicLight
+TriggerLight CLight CPhysicStaticCompound
 Bite CPhysicDynamicEntity CBite
 AmbientSound CStaticAudio
 DamageAmplifier CPhysicStaticEntity CFloatingMovement CSpawnItemManager CAudioTrigger CDynamicParticleSystem

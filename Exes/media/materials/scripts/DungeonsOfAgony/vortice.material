@@ -4,7 +4,6 @@ material vortice
 	{
 		pass
 		{
-			lighting off
 			texture_unit aoMap
 			{
 				texture vortice.png
@@ -20,7 +19,7 @@ material vortice
 		scheme glow
 		pass
 		{
-			lighting off
+
 			texture_unit
 			{
 				texture vortice_glow4.png
