@@ -1,0 +1,2691 @@
+material esferasdelampara_mtl[esferasdelampara] {
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo01] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo01LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo01LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo02] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo02LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo02LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo03] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo03LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo03LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo04] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo04LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo04LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo05] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo05LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo05LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo06] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo06LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo06LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo07] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo07LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo07LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo08] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo08LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo08LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo09] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo09LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo09LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo10] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo10LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo10LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo11] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo11LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo11LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo12] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo12LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo12LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo13] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo13LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo13LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo14] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo14LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrillo14LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#25[ladrillo] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrilloLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture ladrilloLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#26[suelo01] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture suelo01LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture suelo01LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture suelo_NRM_SPEC.tga
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#26[suelo02] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture suelo02LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture suelo02LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture suelo_NRM_SPEC.tga
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#26[suelo] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture sueloLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelo_DIF.jpg
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+			texture_unit BumpedLightmap {
+				texture sueloLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture suelo_NRM_SPEC.tga
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal01] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal01LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal01LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal02] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal02LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal02LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal03] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal03LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal03LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal04] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal04LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal04LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal05] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal05LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal05LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal06] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal06LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal06LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal07] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal07LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal07LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#27[metal] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metalLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metalLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#28[piedra01] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture piedra01LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture piedra01LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#28[piedra] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture piedraLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture piedraLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#29[hueso01] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture hueso_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture hueso01LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture hueso_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture hueso01LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture hueso_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#29[hueso] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture hueso_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture huesoLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture hueso_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture huesoLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture hueso_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material MultiMat_0[metal_lamparas] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal_lamparasLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metal_lamparasLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material MultiMat_0[metaldelampara] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metaldelamparaLightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture metaldelamparaLightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material NoMaterial {
+	technique {
+		pass {
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}

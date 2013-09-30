@@ -1,0 +1,45 @@
+material vortice
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			texture_unit aoMap
+			{
+				texture vortice.png
+				scale 0.1 0.1
+				scroll_anim 0.4 0.25
+			}
+		}
+
+	}
+	
+	technique
+	{
+		scheme glow
+		pass
+		{
+			lighting off
+			texture_unit
+			{
+				texture vortice_glow4.png
+				scale 0.1 0.1
+				scroll_anim 0.4 0.25
+			}
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+
+}

@@ -5,9 +5,7 @@ material healthpack
 	{
 		pass
 		{
-			ambient 0.8 0.8 0.8 1
-			diffuse 0.8 0.8 0.8 1
-			specular 0 0 0 1 10
+			lighting off
 			scene_blend one one_minus_src_alpha
 
 			texture_unit
