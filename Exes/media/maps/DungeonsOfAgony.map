@@ -103,6 +103,11 @@ Map = {
 		position = {279.695, 67.8358, -318.32},
 	},
 	
+	IronHellGoat2 = {
+		type = "IronHellGoatItem",
+		position = {-37.3141, 160.292, 53.6763},
+	},
+	
 	Shotgun = {
 		type = "ShotgunItem",
 		position = {-126.387, 199.253, 48.1789},
@@ -171,6 +176,26 @@ Map = {
 	Orb8 = {
 		type = "Orb",
 		position = {147.981, 115.972, -467.868},
+	},
+	
+	Orb9 = {
+		type = "Orb",
+		position = {-71.4363, 160.291, -54.4294},
+	},
+	
+	Orb10 = {
+		type = "Orb",
+		position = {51.3412, 40.1031, 89.2433},
+	},
+	
+	Orb11 = {
+		type = "Orb",
+		position = {51.7163, 40.108, 148.012},
+	},
+	
+	Orb12 = {
+		type = "Orb",
+		position = {464.104, 141.306, -166.029},
 	},
 	
 	SmallOrb1 = {
@@ -488,6 +513,116 @@ Map = {
 		position = {225.09, 103.387, -440.622},
 	},
 	
+	SmallOrb65 = {
+		type = "SmallOrb",
+		position = {-36.6086, 161.17, 131.349},
+	},
+	
+	SmallOrb66 = {
+		type = "SmallOrb",
+		position = {-38.2638, 161.183, 161.741},
+	},
+	
+	SmallOrb67 = {
+		type = "SmallOrb",
+		position = {-39.7394, 161.196, 190.827},
+	},
+	
+	SmallOrb68 = {
+		type = "SmallOrb",
+		position = {-38.6883, 161.187, 223.83},
+	},
+	
+	SmallOrb69 = {
+		type = "SmallOrb",
+		position = {152.773, 140.778, -288.785},
+	},
+	
+	SmallOrb70 = {
+		type = "SmallOrb",
+		position = {170.102, 140.778, -288.753},
+	},
+	
+	SmallOrb71 = {
+		type = "SmallOrb",
+		position = {187.243, 140.778, -288.722},
+	},
+	
+	SmallOrb72 = {
+		type = "SmallOrb",
+		position = {205.803, 140.777, -288.688},
+	},
+	
+	SmallOrb73 = {
+		type = "SmallOrb",
+		position = {221.706, 140.778, -288.659},
+	},
+	
+	SpawnPoint1 = {
+		type = "SpawnPoint",
+		position = {-348.442, 198.219, 196.188},
+	},
+	
+	SpawnPoint2 = {
+		type = "SpawnPoint",
+		position = {-390.881, 227.505, -246.893},
+	},
+	
+	SpawnPoint3 = {
+		type = "SpawnPoint",
+		position = {-345.554, 199.259, -292.012},
+	},
+	
+	SpawnPoint4 = {
+		type = "SpawnPoint",
+		position = {-258.11, 199.26, 232.166},
+	},
+	
+	SpawnPoint5 = {
+		type = "SpawnPoint",
+		position = {-87.993, 199.259, -139.664},
+	},
+	
+	SpawnPoint6 = {
+		type = "SpawnPoint",
+		position = {462.14, 141.306, -84.9581},
+	},
+	
+	SpawnPoint7 = {
+		type = "SpawnPoint",
+		position = {209.452, 94.9553, -96.3767},
+	},
+	
+	SpawnPoint8 = {
+		type = "SpawnPoint",
+		position = {308.079, 59.8218, -426.765},
+	},
+	
+	SpawnPoint9 = {
+		type = "SpawnPoint",
+		position = {-29.8507, 125.105, -431.456},
+	},
+	
+	SpawnPoint10 = {
+		type = "SpawnPoint",
+		position = {-210.939, 172.709, -431.76},
+	},
+	
+	SpawnPoint11 = {
+		type = "SpawnPoint",
+		position = {354.914, 94.9556, 89.7132},
+	},
+	
+	SpawnPoint12 = {
+		type = "SpawnPoint",
+		position = {315.499, 141.306, -320.949},
+	},
+	
+	SpawnPoint13 = {
+		type = "SpawnPoint",
+		position = {132.19, 114.358, 251.652},
+	},
+	
 	VortexSinisterSound = {
 		type = "AmbientSound",
 		position = {-261.364, 120.75, -104.925},
@@ -584,18 +719,6 @@ Map = {
 		position = {331.829, 104.838, -72.6641},
 		staticAudio_name = "ambient/loop_deep.ogg",
 		staticAudio_stream = true,
-	},
-
-	
-	
-	UniqueSpawnPoint = {
-		type = "SpawnPoint",
-		position = {-348.442, 198.219, 196.188},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
 	},
 
 	ChachiLight = {
