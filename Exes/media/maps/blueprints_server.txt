@@ -63,3 +63,4 @@ miniGunSecondaryShot
 ironHellGoatPrimaryShot 
 ironHellGoatSecondaryShot 
 ScreamerShieldHit
+AmbientSound

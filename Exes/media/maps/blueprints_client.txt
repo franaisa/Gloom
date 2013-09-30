@@ -65,3 +65,4 @@ miniGunSecondaryShot CDynamicParticleSystem
 ironHellGoatPrimaryShot CDynamicParticleSystem
 ironHellGoatSecondaryShot CDynamicParticleSystem
 ScreamerShieldHit CParticleSystem
+AmbientSound CStaticAudio
