@@ -83,6 +83,7 @@ void CPhysicStaticEntity::process(const std::shared_ptr<CMessage>& message) {
 				activateSimulation();
 			else
 				deactivateSimulation();
+
 			break;
 		}
 	}

@@ -83,16 +83,6 @@ Map = {
 		physic_groupList = "-1",
 	},
 	
-	Gazpacho = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {20, 0.2, -20},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/agent47.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
 	Jumper1 = {
 		type = "Jumper",
 		position = {-275.4,0.5,28.1},
