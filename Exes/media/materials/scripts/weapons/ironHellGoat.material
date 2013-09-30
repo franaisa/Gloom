@@ -16,4 +16,27 @@ material IronHellGoat
 
 	}
 
+	technique {
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+	
+	/*technique {
+		scheme glow
+		
+		pass {
+			lighting off
+			texture_unit {
+				texture ironhellgoat_glow.png
+			}
+		}
+		
+	}*/
 }
