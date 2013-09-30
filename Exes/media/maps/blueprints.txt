@@ -17,7 +17,7 @@ ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity
-Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle CParticleSystem
+Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticleSystem
 Lava CGraphicPlane CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
@@ -28,7 +28,7 @@ Spike CSpike CPhysicDynamicEntity CGraphics
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier CScreamerShieldController CDynamicAudio
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
-FireBall CFireBallController CPhysicDynamicEntity CParticle CDynamicLight CGraphics
+FireBall CFireBallController CPhysicDynamicEntity CDynamicLight CGraphics
 LaserBeam CGraphics
 LifeDome CLifeDome CPhysicDynamicEntity CParticleSystem
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
