@@ -1,11 +1,15 @@
 Map = {
 
 	Player = {
-		type = "LocalSpectator",
+		type = "LocalHound",
 		isPlayer = true,
 		position = {0, 5, 0},
 		physic_group = 1,
 		physic_groupList = "-1",
+	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
 	},
 	
 	Camera = {
@@ -606,7 +610,7 @@ Map = {
 	
 	LavaAltarOmni030 = {
 		type = "Light",
-		position = {85.9733, 144.42, -133.581},
+		position = {85.9733, 165.42, -133.581},
 		lightIsStatic = true,
 		lightGroup = 2,
 		lightType = "point",
@@ -617,7 +621,7 @@ Map = {
 	
 	LavaPipesOmni030 = {
 		type = "Light",
-		position = {51.9337, 13.6564, 113.85},
+		position = {51.9337, 30.0, 113.85},
 		lightIsStatic = true,
 		lightGroup = 2,
 		lightType = "point",
@@ -628,15 +632,11 @@ Map = {
 	
 	VortexLight = {
 		type = "Light",
-		position = {-260.262, -4.85, -117.558},
-		direction = {0.0, 1.0, 0.0},
+		position = {-260.262, 180.0, -117.558},
 		lightIsStatic = true,
 		lightGroup = 2,
-		lightType = "spot",
-		innerAngle = 0.93,
-		outerAngle = 1.51,
+		lightType = "point",
 		color = {0.0, 1.0, 0.87},
-		powerScale = 0.500000,
 		range = 3250,
 		attenuation = {1.0, 0.0014, 0.000007},
 	},

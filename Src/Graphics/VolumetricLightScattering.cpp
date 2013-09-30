@@ -148,7 +148,7 @@ namespace Graphics {
 
 			_mapScatterParams.insert(temp);
 		}
-		else if( sceneName.find("angelCachos") != std::string::npos ) {
+		else if( sceneName.find("DungeonsOfAgony") != std::string::npos ) {
 			temp.first = sceneName;
 
 			// Luz de lava pipes

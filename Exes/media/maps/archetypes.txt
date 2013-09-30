@@ -10,7 +10,7 @@ Map = {
 		static = true,
 		physic_entity = "fromFile",
 		physic_normal = { 0, 1, 0 },
-		physic_file = "media/materials/scripts/angelCachos/mapaAngel.RepX",
+		physic_file = "media/models/DungeonsOfAgony/dungeonsOfAgony.RepX",
 		physic_group = 0,
 		physic_groupList = "-1",
 	},
