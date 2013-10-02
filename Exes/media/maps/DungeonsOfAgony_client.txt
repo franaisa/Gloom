@@ -1,0 +1,1065 @@
+Map = {
+
+	PhysicWorld = {
+		type = "PhysicWorld",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+
+	Vortex = {
+		type = "Vortice",
+		position = {-255.078, -400.725, -105.462},
+		model = "vortice.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2000, 50, 2000 },
+		physic_group = 2,
+		physic_groupList = "1",
+		lightMask = "1",
+	},
+	
+	LavaPipes = {
+		type = "Lava",
+		position = {48.2968, 32.1517, 122.804},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 200,
+		plane_height = 200,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = {100, 1, 100},
+	},
+	
+	LavaAltar = {
+		type = "Lava",
+		position = {82.3584, 145.033, -133.341},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 180,
+		plane_height = 220,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = { 100, 1, 120 },
+	},
+	
+	DamageAmplifier = {
+		type = "DamageAmplifier",
+		position = {-258.174, 159.0, -198.872},
+	},
+	
+	CooldownReducer = {
+		type = "CooldownReducer",
+		position = {50.938, 83.0, 118.126},
+	},
+	
+	SuperShield = {
+		type = "SuperShield",
+		position = {83.4928, 205.062, -133.783},
+	},
+	
+	Shield = {
+		type = "Shield",
+		position = {229.656, 145.785, -371.767},
+	},
+	
+	Sniper = {
+		type = "SniperItem",
+		position = {-259.377, 205.968, 43.6596},
+	},
+	
+	Sniper2 = {
+		type = "SniperItem",
+		position = {-53.9443, 185.509, -438.562},
+	},
+	
+	IronHellGoat = {
+		type = "IronHellGoatItem",
+		position = {279.695, 67.8358, -318.32},
+	},
+	
+	IronHellGoat2 = {
+		type = "IronHellGoatItem",
+		position = {-37.3141, 160.292, 53.6763},
+	},
+	
+	Shotgun = {
+		type = "ShotgunItem",
+		position = {-126.387, 199.253, 48.1789},
+	},
+	
+	Shotgun2 = {
+		type = "ShotgunItem",
+		position = {173.671, 157.193, -133.298},
+	},
+	
+	Shotgun3 = {
+		type = "ShotgunItem",
+		position = {305.081, 74.3783, -474.763},
+	},
+	
+	Shotgun4 = {
+		type = "ShotgunItem",
+		position = {-64.0169, 160.291, -104.642},
+	},
+	
+	Minigun = {
+		type = "MinigunItem",
+		position = {303.117, 141.293, -470.963},
+	},
+	
+	Minigun2 = {
+		type = "MinigunItem",
+		position = {451.477, 144.571, -123.168},
+	},
+	
+	Orb1 = {
+		type = "Orb",
+		position = {232.641, 157.193, -162.383},
+	},
+	
+	Orb2 = {
+		type = "Orb",
+		position = {234.569, 157.193, -98.9215},
+	},
+	
+	Orb3 = {
+		type = "Orb",
+		position = {-303.623, 227.505, -232.086},
+	},
+	
+	Orb4 = {
+		type = "Orb",
+		position = {-309.894, 202.811, 39.7556},
+	},
+	
+	Orb5 = {
+		type = "Orb",
+		position = {-125.867, 199.259, -154.271},
+	},
+	
+	Orb6 = {
+		type = "Orb",
+		position = {355.391, 94.9557, 146.84},
+	},
+	
+	Orb7 = {
+		type = "Orb",
+		position = {357.189, 94.9553, -97.8403},
+	},
+	
+	Orb8 = {
+		type = "Orb",
+		position = {147.981, 115.972, -467.868},
+	},
+	
+	Orb9 = {
+		type = "Orb",
+		position = {-71.4363, 160.291, -54.4294},
+	},
+	
+	Orb10 = {
+		type = "Orb",
+		position = {51.3412, 40.1031, 89.2433},
+	},
+	
+	Orb11 = {
+		type = "Orb",
+		position = {51.7163, 40.108, 148.012},
+	},
+	
+	Orb12 = {
+		type = "Orb",
+		position = {464.104, 141.306, -166.029},
+	},
+	
+	SmallOrb1 = {
+		type = "SmallOrb",
+		position = {-258.894, 183.133, -5.81107},
+	},
+	
+	SmallOrb2 = {
+		type = "SmallOrb",
+		position = {-258.894, 180.081, -28.2538},
+	},
+	
+	SmallOrb3 = {
+		type = "SmallOrb",
+		position = {-258.894, 172.777, -50.7638},
+	},
+	
+	SmallOrb4 = {
+		type = "SmallOrb",
+		position = {-258.894, 161.402, -79.4287},
+	},
+	
+	SmallOrb5 = {
+		type = "SmallOrb",
+		position = {-258.894, 153.522, -101.625},
+	},
+	
+	SmallOrb6 = {
+		type = "SmallOrb",
+		position = {-258.894, 148.207, -126.81},
+	},
+	
+	SmallOrb7 = {
+		type = "SmallOrb",
+		position = {-258.894, 149.4, -149.839},
+	},
+	
+	SmallOrb8 = {
+		type = "SmallOrb",
+		position = {-222.968, 199.26, 194.719},
+	},
+	
+	SmallOrb9 = {
+		type = "SmallOrb",
+		position = {-201.635, 199.26, 194.719},
+	},
+	
+	SmallOrb10 = {
+		type = "SmallOrb",
+		position = {-179.783, 199.26, 194.719},
+	},
+	
+	SmallOrb11 = {
+		type = "SmallOrb",
+		position = {-292.605, 199.26, 194.719},
+	},
+	
+	SmallOrb12 = {
+		type = "SmallOrb",
+		position = {-311.353, 199.26, 194.719},
+	},
+	
+	SmallOrb13 = {
+		type = "SmallOrb",
+		position = {-333.353, 199.26, 194.719},
+	},
+	
+	SmallOrb14 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, -31.1},
+	},
+	
+	SmallOrb15 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, -8.1},
+	},
+	
+	SmallOrb16 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, 15.1},
+	},
+	
+	SmallOrb17 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, 38.1},
+	},
+	
+	SmallOrb18 = {
+		type = "SmallOrb",
+		position = {260.34, 157.193, -130.951},
+	},
+	
+	SmallOrb19 = {
+		type = "SmallOrb",
+		position = {283.34, 157.193, -130.951},
+	},
+	
+	SmallOrb20 = {
+		type = "SmallOrb",
+		position = {306.34, 157.193, -130.951},
+	},
+	
+	SmallOrb21 = {
+		type = "SmallOrb",
+		position = {329.34, 157.193, -130.951},
+	},
+	
+	SmallOrb22 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -232.99},
+	},
+	
+	SmallOrb23 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -249.13},
+	},
+	
+	SmallOrb24 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -265.27},
+	},
+	
+	SmallOrb25 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -281.41},
+	},
+	
+	SmallOrb26 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -297.55},
+	},
+	
+	SmallOrb27 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -83.5057},
+	},
+	
+	SmallOrb28 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -98.4987},
+	},
+	
+	SmallOrb29 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -113.4917},
+	},
+	
+	SmallOrb31 = {
+		type = "SmallOrb",
+		position = {19.4491, 199.259, -157.593},
+	},
+	
+	SmallOrb32 = {
+		type = "SmallOrb",
+		position = {19.4491, 199.259, -17.412},
+	},
+	
+	SmallOrb33 = {
+		type = "SmallOrb",
+		position = {25.983, 199.259, -210.508},
+	},
+	
+	SmallOrb34 = {
+		type = "SmallOrb",
+		position = {18.46, 199.259, -180.227},
+	},
+	
+	SmallOrb35 = {
+		type = "SmallOrb",
+		position = {39.7692, 195.201, -229.825},
+	},
+	
+	SmallOrb36 = {
+		type = "SmallOrb",
+		position = {57.0384, 189.587, -242.609},
+	},
+	
+	SmallOrb37 = {
+		type = "SmallOrb",
+		position = {76.5782, 184.295, -247.445},
+	},
+	
+	SmallOrb38 = {
+		type = "SmallOrb",
+		position = {99.299, 178.467, -247.027},
+	},
+	
+	SmallOrb39 = {
+		type = "SmallOrb",
+		position = {119.707, 172.707, -236.87},
+	},
+	
+	SmallOrb40 = {
+		type = "SmallOrb",
+		position = {133.198, 167.423, -221.629},
+	},
+	
+	SmallOrb41 = {
+		type = "SmallOrb",
+		position = {144.077, 161.371, -200.51},
+	},
+	
+	SmallOrb42 = {
+		type = "SmallOrb",
+		position = {18.7801, 199.259, -111.259},
+	},
+
+	SmallOrb43 = {
+		type = "SmallOrb",
+		position = {19.7114, 199.259, -87.9145},
+	},
+	
+	SmallOrb44 = {
+		type = "SmallOrb",
+		position = {22.9519, 199.26, -62.7876},
+	},
+	
+	SmallOrb45 = {
+		type = "SmallOrb",
+		position = {35.9773, 195.93, -34.9933},
+	},
+	
+	SmallOrb46 = {
+		type = "SmallOrb",
+		position = {48.3948, 192.081, -25.4368},
+	},
+	
+	SmallOrb47 = {
+		type = "SmallOrb",
+		position = {65.2231, 187.193, -17.3297},
+	},
+	
+	SmallOrb48 = {
+		type = "SmallOrb",
+		position = {80.9329, 183.102, -14.4097},
+	},
+	
+	SmallOrb49 = {
+		type = "SmallOrb",
+		position = {100.265, 178.29, -16.0666},
+	},
+	
+	SmallOrb50 = {
+		type = "SmallOrb",
+		position = {118.74, 173.041, -25.115},
+	},
+	
+	SmallOrb51 = {
+		type = "SmallOrb",
+		position = {134.532, 167.404, -40.8666},
+	},
+	
+	SmallOrb52 = {
+		type = "SmallOrb",
+		position = {140.016, 163.692, -54.3862},
+	},
+	
+	SmallOrb53 = {
+		type = "SmallOrb",
+		position = {143.373, 160.061, -67.3297},
+	},
+	
+	SmallOrb54 = {
+		type = "SmallOrb",
+		position = {-165.162, 199.26, -21.7228},
+	},
+	
+	SmallOrb55 = {
+		type = "SmallOrb",
+		position = {-164.677, 199.259, -39.045},
+	},
+	
+	SmallOrb56 = {
+		type = "SmallOrb",
+		position = {-176.795, 183.864, -359.537},
+	},
+	
+	SmallOrb57 = {
+		type = "SmallOrb",
+		position = {-159.896, 188.618, -348.646},
+	},
+	
+	SmallOrb58 = {
+		type = "SmallOrb",
+		position = {-142.05, 187.973, -342.07},
+	},
+	
+	SmallOrb59 = {
+		type = "SmallOrb",
+		position = {-124.018, 187.528, -336.008},
+	},
+	
+	SmallOrb60 = {
+		type = "SmallOrb",
+		position = {286.569, 72.2785, -446.784},
+	},
+	
+	SmallOrb61 = {
+		type = "SmallOrb",
+		position = {273.523, 78.0207, -433.635},
+	},
+	
+	SmallOrb62 = {
+		type = "SmallOrb",
+		position = {257.094, 85.811, -428.152},
+	},
+	
+	SmallOrb63 = {
+		type = "SmallOrb",
+		position = {239.481, 94.0714, -431.173},
+	},
+	
+	SmallOrb64 = {
+		type = "SmallOrb",
+		position = {225.09, 103.387, -440.622},
+	},
+	
+	SmallOrb65 = {
+		type = "SmallOrb",
+		position = {-36.6086, 161.17, 131.349},
+	},
+	
+	SmallOrb66 = {
+		type = "SmallOrb",
+		position = {-38.2638, 161.183, 161.741},
+	},
+	
+	SmallOrb67 = {
+		type = "SmallOrb",
+		position = {-39.7394, 161.196, 190.827},
+	},
+	
+	SmallOrb68 = {
+		type = "SmallOrb",
+		position = {-38.6883, 161.187, 223.83},
+	},
+	
+	SmallOrb69 = {
+		type = "SmallOrb",
+		position = {152.773, 140.778, -288.785},
+	},
+	
+	SmallOrb70 = {
+		type = "SmallOrb",
+		position = {170.102, 140.778, -288.753},
+	},
+	
+	SmallOrb71 = {
+		type = "SmallOrb",
+		position = {187.243, 140.778, -288.722},
+	},
+	
+	SmallOrb72 = {
+		type = "SmallOrb",
+		position = {205.803, 140.777, -288.688},
+	},
+	
+	SmallOrb73 = {
+		type = "SmallOrb",
+		position = {221.706, 140.778, -288.659},
+	},
+	
+	SpawnPoint1 = {
+		type = "SpawnPoint",
+		position = {-348.442, 198.219, 196.188},
+	},
+	
+	SpawnPoint2 = {
+		type = "SpawnPoint",
+		position = {-390.881, 227.505, -246.893},
+	},
+	
+	SpawnPoint3 = {
+		type = "SpawnPoint",
+		position = {-345.554, 199.259, -292.012},
+	},
+	
+	SpawnPoint4 = {
+		type = "SpawnPoint",
+		position = {-258.11, 199.26, 232.166},
+	},
+	
+	SpawnPoint5 = {
+		type = "SpawnPoint",
+		position = {-87.993, 199.259, -139.664},
+	},
+	
+	SpawnPoint6 = {
+		type = "SpawnPoint",
+		position = {462.14, 141.306, -84.9581},
+	},
+	
+	SpawnPoint7 = {
+		type = "SpawnPoint",
+		position = {209.452, 94.9553, -96.3767},
+	},
+	
+	SpawnPoint8 = {
+		type = "SpawnPoint",
+		position = {308.079, 59.8218, -426.765},
+	},
+	
+	SpawnPoint9 = {
+		type = "SpawnPoint",
+		position = {-29.8507, 125.105, -431.456},
+	},
+	
+	SpawnPoint10 = {
+		type = "SpawnPoint",
+		position = {-210.939, 172.709, -431.76},
+	},
+	
+	SpawnPoint11 = {
+		type = "SpawnPoint",
+		position = {354.914, 94.9556, 89.7132},
+	},
+	
+	SpawnPoint12 = {
+		type = "SpawnPoint",
+		position = {315.499, 141.306, -320.949},
+	},
+	
+	SpawnPoint13 = {
+		type = "SpawnPoint",
+		position = {132.19, 114.358, 251.652},
+	},
+	
+	VortexSinisterSound = {
+		type = "AmbientSound",
+		position = {-261.364, 120.75, -104.925},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaAltarSound = {
+		type = "AmbientSound",
+		position = {87.0575, 165.676, -136.193},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	AltarSound = {
+		type = "AmbientSound",
+		position = {198.24, 160.864, -130.803},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound = {
+		type = "AmbientSound",
+		position = {110.972, 41.9249, 119.736},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound2 = {
+		type = "AmbientSound",
+		position = {-6.87131, 41.9249, 119.509},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	PipesSound = {
+		type = "AmbientSound",
+		position = {-33.102, 178.598, 252.685},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	MainRoomSound = {
+		type = "AmbientSound",
+		position = {-259.643, 189.844, 183.581},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	FlakSound = {
+		type = "AmbientSound",
+		position = {-45.9532, 188.384, -84.8533},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound1 = {
+		type = "AmbientSound",
+		position = {-24.587, 155.621, -380.187},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound2 = {
+		type = "AmbientSound",
+		position = {221.279, 146.421, -373.65},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound3 = {
+		type = "AmbientSound",
+		position = {224.95, 36.6579, -361.412},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	IronSound = {
+		type = "AmbientSound",
+		position = {455.307, 146.747, -120.942},
+		staticAudio_name = "ambient/sinister_portal.wav",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound = {
+		type = "AmbientSound",
+		position = {235.031, 106.95, 113.566},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound2 = {
+		type = "AmbientSound",
+		position = {331.829, 104.838, -72.6641},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+
+	ChachiLight = {
+		type = "Light",
+		direction = {0.0, -1.0, 0.0},
+		position = {0.0, 0.0, 0.0},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "directional",
+		color = {0.9, 0.9, 0.9},
+	}, 
+	
+	LavaAltarOmni030 = {
+		type = "Light",
+		position = {85.9733, 165.42, -133.581},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "point",
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+	
+	LavaPipesOmni030 = {
+		type = "Light",
+		position = {51.9337, 30.0, 113.85},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "point",
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+	
+	VortexLight = {
+		type = "Light",
+		position = {-260.262, 180.0, -117.558},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "point",
+		color = {0.0, 1.0, 0.87},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+
+	suelo = {
+		type = "World",
+		model = "suelo.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.000000 -0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	ladrillo = {
+		type = "World",
+		model = "ladrillo.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.500000 -0.500000 0.500000 0.500000",
+		static = true,
+	},
+
+	metal = {
+		type = "World",
+		model = "metal.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	piedra = {
+		type = "World",
+		model = "piedra.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000000 1.000000 -0.000000 0.000000",
+		static = true,
+	},
+
+	hueso = {
+		type = "World",
+		model = "hueso.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.994465 -0.039614 0.047210 0.085094",
+		static = true,
+	},
+
+	metal_lamparas = {
+		type = "World",
+		model = "metal_lamparas.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.000000 0.723885 0.689921 0.000000",
+		static = true,
+	},
+
+	esferas_lamparas = {
+		type = "World",
+		model = "esferas_lamparas.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.707107 -0.000000 0.000000 0.707107",
+		static = true,
+	},
+
+	esferasdelampara = {
+		type = "World",
+		model = "esferasdelampara.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.707107 -0.000000 0.000000 0.707107",
+		static = true,
+	},
+
+	metaldelampara = {
+		type = "World",
+		model = "metaldelampara.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.000000 0.723885 0.689921 0.000000",
+		static = true,
+	},
+
+	ladrillo01 = {
+		type = "World",
+		model = "ladrillo01.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo02 = {
+		type = "World",
+		model = "ladrillo02.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo03 = {
+		type = "World",
+		model = "ladrillo03.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo04 = {
+		type = "World",
+		model = "ladrillo04.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo05 = {
+		type = "World",
+		model = "ladrillo05.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo06 = {
+		type = "World",
+		model = "ladrillo06.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo07 = {
+		type = "World",
+		model = "ladrillo07.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo08 = {
+		type = "World",
+		model = "ladrillo08.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo09 = {
+		type = "World",
+		model = "ladrillo09.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo10 = {
+		type = "World",
+		model = "ladrillo10.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	metal01 = {
+		type = "World",
+		model = "metal01.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal02 = {
+		type = "World",
+		model = "metal02.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal03 = {
+		type = "World",
+		model = "metal03.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal04 = {
+		type = "World",
+		model = "metal04.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal05 = {
+		type = "World",
+		model = "metal05.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal06 = {
+		type = "World",
+		model = "metal06.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	metal07 = {
+		type = "World",
+		model = "metal07.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000001 -0.000000 0.714185 0.699957",
+		static = true,
+	},
+
+	suelo01 = {
+		type = "World",
+		model = "suelo01.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.000000 -0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	suelo02 = {
+		type = "World",
+		model = "suelo02.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.000000 -0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	piedra01 = {
+		type = "World",
+		model = "piedra01.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "-0.000000 1.000000 -0.000000 0.000000",
+		static = true,
+	},
+
+	hueso01 = {
+		type = "World",
+		model = "hueso01.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.994465 -0.039614 0.047210 0.085094",
+		static = true,
+	},
+
+	ladrillo11 = {
+		type = "World",
+		model = "ladrillo11.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo12 = {
+		type = "World",
+		model = "ladrillo12.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo13 = {
+		type = "World",
+		model = "ladrillo13.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+	ladrillo14 = {
+		type = "World",
+		model = "ladrillo14.mesh",
+		scale = {0.300000, 0.300000, 0.300000},
+		position = {0.0, 0.0, 0.0},
+		rotation = "0.500000 0.500000 -0.500000 -0.500000",
+		static = true,
+	},
+
+}
