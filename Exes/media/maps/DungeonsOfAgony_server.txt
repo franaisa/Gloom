@@ -1004,7 +1004,7 @@ Map = {
 		rotation = "0.500000 0.500000 -0.500000 -0.500000",
 		static = true,
 	},
-
+	
 	SpawnPoint1 = {
 		type = "SpawnPoint",
 		position = {-348.442, 198.219, 196.188},
