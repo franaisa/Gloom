@@ -1,5 +1,13 @@
 Map = {
 
+	Player = {
+		type = "LocalHound",
+		isPlayer = true,
+		position = {0, 5, 0},
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
 	PhysicWorld = {
 		type = "PhysicWorld",
 	},
@@ -550,71 +558,6 @@ Map = {
 		position = {221.706, 140.778, -288.659},
 	},
 	
-	SpawnPoint1 = {
-		type = "SpawnPoint",
-		position = {-348.442, 198.219, 196.188},
-	},
-	
-	SpawnPoint2 = {
-		type = "SpawnPoint",
-		position = {-390.881, 227.505, -246.893},
-	},
-	
-	SpawnPoint3 = {
-		type = "SpawnPoint",
-		position = {-345.554, 199.259, -292.012},
-	},
-	
-	SpawnPoint4 = {
-		type = "SpawnPoint",
-		position = {-258.11, 199.26, 232.166},
-	},
-	
-	SpawnPoint5 = {
-		type = "SpawnPoint",
-		position = {-87.993, 199.259, -139.664},
-	},
-	
-	SpawnPoint6 = {
-		type = "SpawnPoint",
-		position = {462.14, 141.306, -84.9581},
-	},
-	
-	SpawnPoint7 = {
-		type = "SpawnPoint",
-		position = {209.452, 94.9553, -96.3767},
-	},
-	
-	SpawnPoint8 = {
-		type = "SpawnPoint",
-		position = {308.079, 59.8218, -426.765},
-	},
-	
-	SpawnPoint9 = {
-		type = "SpawnPoint",
-		position = {-29.8507, 125.105, -431.456},
-	},
-	
-	SpawnPoint10 = {
-		type = "SpawnPoint",
-		position = {-210.939, 172.709, -431.76},
-	},
-	
-	SpawnPoint11 = {
-		type = "SpawnPoint",
-		position = {354.914, 94.9556, 89.7132},
-	},
-	
-	SpawnPoint12 = {
-		type = "SpawnPoint",
-		position = {315.499, 141.306, -320.949},
-	},
-	
-	SpawnPoint13 = {
-		type = "SpawnPoint",
-		position = {132.19, 114.358, 251.652},
-	},
-	
 	VortexSinisterSound = {
 		type = "AmbientSound",
 		position = {-261.364, 120.75, -104.925},
@@ -1062,4 +1005,69 @@ Map = {
 		static = true,
 	},
 
+	SpawnPoint1 = {
+		type = "SpawnPoint",
+		position = {-348.442, 198.219, 196.188},
+	},
+	
+	SpawnPoint2 = {
+		type = "SpawnPoint",
+		position = {-390.881, 227.505, -246.893},
+	},
+	
+	SpawnPoint3 = {
+		type = "SpawnPoint",
+		position = {-345.554, 199.259, -292.012},
+	},
+	
+	SpawnPoint4 = {
+		type = "SpawnPoint",
+		position = {-258.11, 199.26, 232.166},
+	},
+	
+	SpawnPoint5 = {
+		type = "SpawnPoint",
+		position = {-87.993, 199.259, -139.664},
+	},
+	
+	SpawnPoint6 = {
+		type = "SpawnPoint",
+		position = {462.14, 141.306, -84.9581},
+	},
+	
+	SpawnPoint7 = {
+		type = "SpawnPoint",
+		position = {209.452, 94.9553, -96.3767},
+	},
+	
+	SpawnPoint8 = {
+		type = "SpawnPoint",
+		position = {308.079, 59.8218, -426.765},
+	},
+	
+	SpawnPoint9 = {
+		type = "SpawnPoint",
+		position = {-29.8507, 125.105, -431.456},
+	},
+	
+	SpawnPoint10 = {
+		type = "SpawnPoint",
+		position = {-210.939, 172.709, -431.76},
+	},
+	
+	SpawnPoint11 = {
+		type = "SpawnPoint",
+		position = {354.914, 94.9556, 89.7132},
+	},
+	
+	SpawnPoint12 = {
+		type = "SpawnPoint",
+		position = {315.499, 141.306, -320.949},
+	},
+	
+	SpawnPoint13 = {
+		type = "SpawnPoint",
+		position = {132.19, 114.358, 251.652},
+	},
+	
 }
