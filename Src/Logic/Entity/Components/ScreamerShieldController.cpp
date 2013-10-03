@@ -83,7 +83,6 @@ namespace Logic {
 		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z ) * (_capsuleRadius + screamerShieldRadius) );
 		shootPosition.y += _heightShoot;
 		
-		printf("\n Posicion shield: %f, %f, %f",shootPosition.x,shootPosition.y,shootPosition.z);
 		// Seteamos la posicion fisica del escudo
 		if(_physicComponent) {
 			_physicComponent->setGlobalPose( shootPosition, _owner->getOrientation(), false );

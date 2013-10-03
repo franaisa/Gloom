@@ -83,7 +83,9 @@ namespace Logic
 	void CMagneticBullet::impact(CEntity *impactEntity)
 	{
 		//printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
-		if(impactEntity->getType() == "PhysicWorld"){
+		if( impactEntity->getType() == "PhysicWorld"	||
+			impactEntity->getType() == "World"	||
+			impactEntity->getType() == "PhysicAndGraphicWorld" ){
 			// Por ahora le paso x quien me he muerto, en un futuro deberian estar los decals en mas facil acceso, como en graphics y ya ta :D
 			if(_owner)
 				_owner->destroyProjectile(_entity, impactEntity);

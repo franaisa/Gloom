@@ -247,7 +247,7 @@ namespace Logic {
 		if(_currentParticle){
 			std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 			activateMsg->setActivated(true);
-			_currentParticle->emitMessage(activateMsg);
+			_currentParticle->emitMessage(activateMsg);	
 		}else{
 			_currentParticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			

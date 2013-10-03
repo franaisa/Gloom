@@ -50,11 +50,18 @@ namespace Graphics {
 		ColourValue ogreColor(color.x, color.y, color.z, color.w);
 		writeToTexture(text, texture, Image::Box(25, 275, 370, 500), font, ogreColor, 'c');
 
+		// Volvemos a renderizar sobre una textura el texto, pero esta vez para asegurarnos
+		// que la fase de oclusion del light scatter no afecta al billboard
+		TexturePtr blackTexture = TextureManager::getSingleton().createManual(writeTexture, "General", TEX_TYPE_2D, 512, 512, MIP_UNLIMITED , PF_A8R8G8B8, Ogre::TU_STATIC | Ogre::TU_AUTOMIPMAP);
+		blackTexture->getBuffer()->blit( background->getBuffer() );
+		// Escribimos sobre la textura el texto dado por parametro
+		writeToTexture(text, blackTexture, Image::Box(25, 275, 370, 500), font, ColourValue::Black, 'c');
+
 		// Creamos un material a partir de la textura generada
 		// para el billboard que vamos a crear
 		MaterialPtr m_QuadMaterial = Ogre::MaterialManager::getSingleton().create( ( textMaterial ), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false );
 
-		Ogre::Pass *pass = m_QuadMaterial->getTechnique( 0 )->getPass( 0 );
+		Ogre::Pass *pass = m_QuadMaterial->getTechnique(0)->getPass(0);
 		pass->setLightingEnabled( false );
 		pass->setDepthCheckEnabled( true );
 		pass->setDepthWriteEnabled( false );
@@ -62,6 +69,22 @@ namespace Graphics {
 
 		Ogre::TextureUnitState *tex = pass->createTextureUnitState( "MyCustomState", 0 );
 		tex->setTexture(texture);
+		tex->setTextureFiltering( Ogre::TFO_ANISOTROPIC );
+		tex->setTextureAnisotropy( 8 );
+
+		// Creamos una nueva tecnica para aplicar la oclusion del light scatter.
+		// En este caso lo unico que hacemos es pintar el texto de negro.
+		Ogre::Technique* technique = m_QuadMaterial->createTechnique();
+		technique->setSchemeName("blackScheme");
+
+		pass = technique->createPass();
+		pass->setLightingEnabled(false);
+		pass->setDepthCheckEnabled( true );
+		pass->setDepthWriteEnabled( false );
+		pass->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+
+		tex = pass->createTextureUnitState( "BlackText", 0 );
+		tex->setTexture(blackTexture);
 		tex->setTextureFiltering( Ogre::TFO_ANISOTROPIC );
 		tex->setTextureAnisotropy( 8 );
 
