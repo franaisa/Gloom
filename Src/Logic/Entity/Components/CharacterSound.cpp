@@ -139,7 +139,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
-		if(otherComponent->getEntity()->getType() == "World") {
+		/*if(otherComponent->getEntity()->getType() == "World") {
 			// Como el mundo se carga desde fichero, podemos garantizar que sus
 			// colliders tienen nombre asignado
 			string material = otherComponent->getPhysicName();
@@ -174,7 +174,7 @@ namespace Logic {
 					// Reproducimos el sonido de impacto contra el costado
 				}
 			}
-		}
+		}*/
 	}
 
 } // namespace Logic
