@@ -80,14 +80,14 @@ namespace Logic {
 	bool CSpectatorController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		/*assert( entityInfo->hasAttribute("frictionCoef") && "Error: No se ha definido el atributo frictionCoef en el mapa" );
+		assert( entityInfo->hasAttribute("frictionCoef") && "Error: No se ha definido el atributo frictionCoef en el mapa" );
 		_frictionCoef = entityInfo->getFloatAttribute("frictionCoef");
 
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
 		_acceleration = entityInfo->getFloatAttribute("acceleration");
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");*/
+		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
 
 		_hud = _entity->getComponent<CSpectatorHud>("CSpectatorHud");
 

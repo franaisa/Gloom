@@ -119,36 +119,7 @@ namespace Graphics {
 		std::list<ScatteringParams> lightInfoList;
 		ScatteringParams params;
 		
-		if( sceneName.find("map3") != std::string::npos ) {
-			temp.first = sceneName;
-
-			// Luz de lava 1
-			
-			params.lightPosition	= Vector3(56.0013, -80.1929, 122.114);
-			params.density			= 0.2f;
-			params.decay			= 0.99f;
-			params.weight			= 1.0f;
-			params.exposure			= 0.1f;
-
-			lightInfoList.push_back(params);
-		
-			// Luz de lava 2
-			params.lightPosition	= Vector3(74.8055f, 20.179f, -134.406f);
-
-			lightInfoList.push_back(params);
-
-			// Luz del vortice
-			params.lightPosition	= Vector3(-256.412f, -500.0f, -98.3735f);
-			params.density			= 0.22f;
-
-			lightInfoList.push_back(params);
-
-			// Introducimos las luces del mapa de angel
-			temp.second = lightInfoList;
-
-			_mapScatterParams.insert(temp);
-		}
-		else if( sceneName.find("DungeonsOfAgony") != std::string::npos ) {
+		if( sceneName.find("Dungeons") != std::string::npos ) {
 			temp.first = sceneName;
 
 			// Luz de lava pipes
@@ -178,7 +149,7 @@ namespace Graphics {
 
 			_mapScatterParams.insert(temp);
 		}
-		else if( sceneName.find("map2") != std::string::npos ) {
+		else if( sceneName.find("Factory") != std::string::npos ) {
 			// Luces del mapa de alberto
 			temp.first = sceneName;
 			
