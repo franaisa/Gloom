@@ -164,6 +164,34 @@ material archangelDiamond {
 		}
 		
 	}
+	
+	technique {
+		
+		
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		
+	
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 //HECHIZO BERSERK
@@ -235,6 +263,34 @@ material ArchangelBerserk {
 			
 		}
 	}
+	
+	technique {
+		
+		
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		
+	
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 material ArchangelAzul {
@@ -301,6 +357,34 @@ material ArchangelAzul {
 				texture map_arcangel_NRM_SPEC.tga
 			}
 			
+		}
+	}
+	
+	technique {
+		
+		
+		scheme depthScheme
+		pass {
+			lighting off
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		
+	
+		scheme blackScheme
+		pass {
+			lighting off
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
 		}
 	}
 }
