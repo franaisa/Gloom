@@ -1,0 +1,597 @@
+Map = {
+
+	World = {
+		type = "World",
+		model = "mapaAlberto.mesh",
+		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
+	},
+	
+	Jumper1 = {
+		type = "Jumper",
+		position = {-275.4,0.5,28.1},
+		force = {0.5,3.5,0.0},
+	},
+
+	DamageAmplifier = {
+		type = "DamageAmplifier",
+		position = {-96.3475, 3.420609, 22.3819},
+	},
+	
+	CooldownReducer = {
+		type = "CooldownReducer",
+		position = {67.2079, 3.480556, 25.8414},
+	},
+	
+	Orb1 = {
+		type = "Orb",
+		position = {-158.986, 78.9277, 11.0677},
+	},
+	
+	Orb2 = {
+		type = "Orb",
+		position = {-189.542, 0.505894, 38.4553},
+	},
+	
+	Orb3 = {
+		type = "Orb",
+		position = {-396.591, 74.8584, -229.681},
+	},
+	
+	Orb4 = {
+		type = "Orb",
+		position = {-9.4988, 0.34113, 8.26143},
+	},
+	
+	Orb5 = {
+		type = "Orb",
+		position = {71.7457, 0.483447, -119.746},
+	},
+	
+	SmallOrb1 = {
+		type = "SmallOrb",
+		position = {-116.226, 63.2829, -41.4305},
+	},
+	
+	SmallOrb2 = {
+		type = "SmallOrb",
+		position = {-102.414, 63.2822, -41.4883},
+	},
+	
+	SmallOrb3 = {
+		type = "SmallOrb",
+		position = {-89.8969, 63.2807, -41.5407},
+	},
+	
+	SmallOrb4 = {
+		type = "SmallOrb",
+		position = {-73.3891, 63.2773, -41.6098},
+	},
+	
+	SmallOrb5 = {
+		type = "SmallOrb",
+		position = {-55.9932, 63.2719, -41.6826},
+	},
+	
+	SmallOrb6 = {
+		type = "SmallOrb",
+		position = {-42.6587, 63.2666, -41.7384},
+	},
+	
+	SmallOrb7 = {
+		type = "SmallOrb",
+		position = {-28.6786, 63.2599, -41.7969},
+	},
+	
+	SmallOrb8 = {
+		type = "SmallOrb",
+		position = {-17.2443, 63.2536, -41.8448},
+	},
+	
+	SmallOrb9 = {
+		type = "SmallOrb",
+		position = {-3.6101, 63.245, -41.9019},
+	},
+	
+	SmallOrb10 = {
+		type = "SmallOrb",
+		position = {38.9595, 63.2693, -69.1379},
+	},
+	
+	SmallOrb11 = {
+		type = "SmallOrb",
+		position = {39.0068, 63.2644, -82.3021},
+	},
+	
+	SmallOrb12 = {
+		type = "SmallOrb",
+		position = {39.0426, 63.2602, -92.2952},
+	},
+	
+	SmallOrb13 = {
+		type = "SmallOrb",
+		position = {39.0887, 63.2542, -105.123},
+	},
+	
+	SmallOrb14 = {
+		type = "SmallOrb",
+		position = {118.935, 0.510507, 32.1652},
+	},
+	
+	SmallOrb15 = {
+		type = "SmallOrb",
+		position = {132.486, 0.518429, 32.3823},
+	},
+	
+	SmallOrb16 = {
+		type = "SmallOrb",
+		position = {147.152, 0.527003, 32.6173},
+	},
+	
+	SmallOrb17 = {
+		type = "SmallOrb",
+		position = {-161.678, 0.464244, -75.9022},
+	},
+	
+	SmallOrb18 = {
+		type = "SmallOrb",
+		position = {-176.713, 0.450917, -75.4475},
+	},
+	
+	SmallOrb19 = {
+		type = "SmallOrb",
+		position = {-244.772, 0.456586, -75.6409},
+	},
+	
+	SmallOrb20 = {
+		type = "SmallOrb",
+		position = {-259.165, 0.454274, -75.562},
+	},
+	
+	SmallOrb21 = {
+		type = "SmallOrb",
+		position = {-274.225, 0.451854, -75.4795},
+	},
+	
+	SmallOrb22 = {
+		type = "SmallOrb",
+		position = {-289.479, 0.449404, -75.3959},
+	},
+	
+	SmallOrb23 = {
+		type = "SmallOrb",
+		position = {-328.036, 0.632701, 28.4203},
+	},
+	
+	SmallOrb24 = {
+		type = "SmallOrb",
+		position = {-315.556, 0.621278, 28.3856},
+	},
+	
+	SmallOrb25 = {
+		type = "SmallOrb",
+		position = {-299.095, 0.606207, 28.3398},
+	},
+	
+	SmallOrb26 = {
+		type = "SmallOrb",
+		position = {-308.209, 74.7572, -75.3653},
+	},
+	
+	SmallOrb27 = {
+		type = "SmallOrb",
+		position = {-284.439, 74.7259, -73.7586},
+	},
+	
+	SmallOrb28 = {
+		type = "SmallOrb",
+		position = {-260.206, 74.7054, -72.7105},
+	},
+	
+	SmallOrb29 = {
+		type = "SmallOrb",
+		position = {-217.991, 75.5284, -39.905},
+	},
+	
+	SmallOrb30 = {
+		type = "SmallOrb",
+		position = {-217.417, 76.2516, -19.8697},
+	},
+	
+	SmallOrb31 = {
+		type = "SmallOrb",
+		position = {-216.817, 77.0081, 1.0886},
+	},
+	
+	SmallOrb32 = {
+		type = "SmallOrb",
+		position = {-200.099, 56.6307, -228.892},
+	},
+	
+	SmallOrb33 = {
+		type = "SmallOrb",
+		position = {-221.308, 60.3944, -228.327},
+	},
+	
+	SmallOrb34 = {
+		type = "SmallOrb",
+		position = {-244.682, 64.5728, -230.482},
+	},
+	
+	SmallOrb35 = {
+		type = "SmallOrb",
+		position = {-269.447, 68.9676, -229.823},
+	},
+	
+	SmallOrb36 = {
+		type = "SmallOrb",
+		position = {-228.635, 0.542214, -229.007},
+	},
+	
+	SmallOrb37 = {
+		type = "SmallOrb",
+		position = {-209.868, 0.525033, -228.808},
+	},
+	
+	SmallOrb38 = {
+		type = "SmallOrb",
+		position = {-190.025, 0.506866, -228.598},
+	},
+	
+	SmallOrb39 = {
+		type = "SmallOrb",
+		position = {-172.529, 0.490849, -228.413},
+	},
+	
+	SmallOrb40 = {
+		type = "SmallOrb",
+		position = {-332.583, 63.057, 52.827},
+	},
+	
+	SmallOrb41 = {
+		type = "SmallOrb",
+		position = {-314.17, 63.0722, 52.9202},
+	},
+	
+	SmallOrb42 = {
+		type = "SmallOrb",
+		position = {-292.065, 63.0903, 53.0322},
+	},
+	
+	SmallOrb43 = {
+		type = "SmallOrb",
+		position = {-272.927, 63.1061, 53.1291},
+	},
+	
+	Shotgun = {
+		type = "ShotgunItem",
+		position = {223.227, 0.570814, -65.3359},
+	},
+	
+	Shotgun2 = {
+		type = "ShotgunItem",
+		position = {67.1862, 78.6589, 27.5319},
+	},
+	
+	Sniper = {
+		type = "SniperItem",
+		position = {43.8501, 47.8803, -188.012} ,
+	},
+	
+	Minigun = {
+		type = "MinigunItem",
+		position = {-93.8908, 0.418792, -194.696},
+	},
+	
+	IronHellGoat = {
+		type = "IronHellGoatItem",
+		position = {-397.8, 0.6,-227.0},
+	},
+	
+	IronHellGoat2 = {
+		type = "IronHellGoatItem",
+		position = {30.4651, 0.3045, 30.2545},
+	},
+	
+	SuperShield = {
+		type = "SuperShield",
+		position = {-383.516, 75.1333, -74.2584},
+	},
+	
+	Shield = {
+		type = "Shield",
+		position = {-371.658, 0.506274, -76.8241},
+	},
+	
+	ShotgunAmmo1 = {
+		type = "ShotgunAmmo",
+		position = {118.983, 0.51058, -143.614},
+	},
+	
+	ShotgunAmmo2 = {
+		type = "ShotgunAmmo",
+		position = {225.023, 0.571823, -71.39},
+	},
+	
+	ShotgunAmmo3 = {
+		type = "ShotgunAmmo",
+		position = {225.023, 0.571823, -71.39},
+	},
+	
+	ShotgunAmmo4 = {
+		type = "ShotgunAmmo",
+		position = {-362.857, 0.664502, 66.9392},
+	},
+	
+	ShotgunAmmo5 = {
+		type = "ShotgunAmmo",
+		position = {64.3496, 78.6529, -8.67489},
+	},
+	
+	IronHellGoatAmmo1 = {
+		type = "IronHellGoatAmmo",
+		position = {73.4929, 0.48245, -17.33},
+	},
+	
+	IronHellGoatAmmo2 = {
+		type = "IronHellGoatAmmo",
+		position = {66.7495, 0.480398, -26.8473},
+	},
+	
+	IronHellGoatAmmo3 = {
+		type = "IronHellGoatAmmo",
+		position = {-379.909, 0.680705, -230.897},
+	},
+	
+	MinigunAmmo1 = {
+		type = "MinigunAmmo",
+		position = {48.5479, 0.28835, -172.243},
+	},
+	
+	MinigunAmmo2 = {
+		type = "MinigunAmmo",
+		position = {-152.632, 0.472601, -211.63},
+	},
+	
+	MinigunAmmo3 = {
+		type = "MinigunAmmo",
+		position = {-152.346, 0.472294, -188.268},
+	},
+	
+	SniperAmmo1 = {
+		type = "Ammo",
+		position = {-400.625, 0.631543, -119.066},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo2 = {
+		type = "SniperAmmo",
+		position = {-400.539, 0.69909, 21.8122},
+	},
+	
+	SniperAmmo3 = {
+		type = "SniperAmmo",
+		position = {47.0265, 47.8757, -211.542},
+	},
+	
+	SniperAmmo4 = {
+		type = "SniperAmmo",
+		position = {-372.011, 75.2429, -8.87294},
+	},
+	
+	SniperAmmo5 = {
+		type = "SniperAmmo",
+		position = {-372.018, 75.2432, -138.764},
+	},
+	
+	lavaFondo = {
+		type = "Lava",
+		position = {-218.0,-20.0, -67.7},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 1500,
+		plane_height = 1500,
+		plane_xSegments = 20,
+		plane_ySegments = 20,
+		plane_uTiling = 20,
+		plane_vTiling = 20,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		damage = 500,
+		timeDamage = 500,
+		
+		physic_entity = "plane",
+		physic_normal = {0, 1, 0},
+		physic_trigger = true,
+		physic_group = 11,
+		physic_groupList = "1",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+		position = {28.0, 60.0, -17.0},
+		target = {-233.0, 2, 116.0},
+	},
+	
+	Light = {
+		type = "Light",
+		lightType = "directional",
+		position = {-97.9955, 68.2714, -211.816},
+		direction = {0.0, -1.0, 0.0},
+		color = {0.5, 0.5, 0.5},
+		innerAngle = 0.63,
+		outerAngle = 1.11,
+		lightGroup = 2,
+		lightIsStatic = true,
+	},
+	
+	LavaSound1 = {
+		type = "AmbientSound",
+		position = {-6.34871, 1.65, -71.602},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound2 = {
+		type = "AmbientSound",
+		position = {-123.08, 1.65, -64.36},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound3 = {
+		type = "AmbientSound",
+		position = {-225.305, 1.65, -60.94},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound4 = {
+		type = "AmbientSound",
+		position = {-324.381, 1.65, -56.35},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	Fan = {
+		type = "AmbientSound",
+		position = {192.972, 88.67, -67.08},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient1 = {
+		type = "AmbientSound",
+		position = {121.414, 3.0115, -230.99},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient2 = {
+		type = "AmbientSound",
+		position = {-51.9089, 47.9726, -241.786},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+
+	Ambient3 = {
+		type = "AmbientSound",
+		position = {-400.232, 74.89, -73.5654},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient4 = {
+		type = "AmbientSound",
+		position = {-34.8509, 78.4421, 58.429},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	SpawnPoint1 = {
+		type = "SpawnPoint",
+		position = {-236.57, 0.548904, 59.9902},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint2 = {
+		type = "SpawnPoint",
+		position = {158.461, 0.533236, -153.248},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint3 = {
+		type = "SpawnPoint",
+		position = {283.529, 0.606699, 29.9253},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint4 = {
+		type = "SpawnPoint",
+		position = {115.584, 3.00282, -226.303},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint5 = {
+		type = "SpawnPoint",
+		position = {117.981, 3.00103, -225.294},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint6 = {
+		type = "SpawnPoint",
+		position = {36.9112, 0.298983, -162.241},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint7 = {
+		type = "SpawnPoint",
+		position = {-330.834, 0.635771, -227.516},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint8 = {
+		type = "SpawnPoint",
+		position = {-141.796, 48.1512, -240.047},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint9 = {
+		type = "SpawnPoint",
+		position = {91.367, 47.811, -236.545},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+
+	
+	
+}
