@@ -7,6 +7,10 @@
 #include <vector>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
+namespace Graphics {
+	class CScene;
+}
+
 namespace Logic {
 	class IWeaponAmmo;
 }
@@ -75,6 +79,8 @@ namespace Logic
 		void addWeapon(int ammo, int weaponIndex);
 
 	protected:
+
+		virtual void onTick(unsigned int msecs);
 		/**
 		Función que se llama cuando se quiere cambiar de arma utilizando el scroll. A partir del arma actual,
 		recorre el array del inventario de armas hacia adelante (iWeapon == 100) o hacia atrá (iWeapon == -100),
@@ -90,6 +96,11 @@ namespace Logic
 		int _currentWeapon;
 
 		std::vector< std::pair<bool, IWeaponAmmo*> > _weaponry;
+
+		Graphics::CScene *_currentScene;
+
+		float _amplifydamageTimeStamp;
+		float _coolDownTimeStamp;
 
 	}; // class CShoot
 

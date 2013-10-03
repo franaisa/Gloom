@@ -17,6 +17,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Maps/WorldState.h"
+#include "Logic/Maps/Map.h"
 
 #include "WeaponAmmo.h"
 /*#include "ShootShotGunAmmo.h"
@@ -49,7 +50,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	CWeaponsManagerClient::CWeaponsManagerClient() : _currentWeapon(0) {
+	CWeaponsManagerClient::CWeaponsManagerClient() : _currentWeapon(0), _coolDownTimeStamp(0), _amplifydamageTimeStamp(0) {
 		
 	}
 
@@ -70,6 +71,8 @@ namespace Logic
 		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<Logic::CMiniGunAmmo>("CMiniGunAmmo");
 		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<Logic::CIronHellGoatAmmo>("CIronHellGoatAmmo");
 
+
+		_currentScene = _entity->getMap()->getScene();
 		return true;
 
 	} // spawn
@@ -92,6 +95,12 @@ namespace Logic
 		// Por defecto la primera arma está activada y equipadda
 		_weaponry[WeaponType::eSOUL_REAPER].first = true;
 		_weaponry[WeaponType::eSOUL_REAPER].second->stayAvailable();
+
+		_currentScene->createCompositor("AmplifyDamageCompositor");
+		_currentScene->setCompositorVisible("AmplifyDamageCompositor", false);
+		_currentScene->createCompositor("ColdDownCompositor");
+		_currentScene->setCompositorVisible("ColdDownCompositor", false);
+
 	} // onActivate
 	//---------------------------------------------------------
 
@@ -202,6 +211,13 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->amplifyDamage(percentage);
 		}
+
+		if(!percentage){
+			_currentScene->setCompositorVisible("AmplifyDamageCompositor", false);
+		}else{
+			_currentScene->setCompositorVisible("AmplifyDamageCompositor", true);
+			_amplifydamageTimeStamp = 1500; 
+		}
 	}
 
 	//---------------------------------------------------------
@@ -210,6 +226,13 @@ namespace Logic
 		// Reducimos el cooldown de todas las armas en base al porcentaje dado
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->reduceCooldown(percentage);
+		}
+
+		if(!percentage){
+			_currentScene->setCompositorVisible("ColdDownCompositor", false);
+		}else{
+			_currentScene->setCompositorVisible("ColdDownCompositor", true);
+			_coolDownTimeStamp = 1500;
 		}
 	}
 
@@ -294,6 +317,24 @@ namespace Logic
 
 		return -1; //No hemos obtenido arma
 	}//selectScrollWeapon
+
+	void CWeaponsManagerClient::onTick(unsigned int msecs) {
+
+		if(_coolDownTimeStamp > 0){
+			_coolDownTimeStamp -= msecs;
+			_currentScene->updateCompositorVariable("AmplifyDamageCompositor", "strength", _coolDownTimeStamp*0.01);
+			if(_coolDownTimeStamp <= 0)
+				_coolDownTimeStamp = 100;
+		}
+
+		if(_amplifydamageTimeStamp > 0){
+			_amplifydamageTimeStamp -= msecs;
+			_currentScene->updateCompositorVariable("ColdDownCompositor", "strength", _amplifydamageTimeStamp*0.01);
+			if(_amplifydamageTimeStamp <= 0)
+				_amplifydamageTimeStamp = 100;
+		}
+		
+	}
 
 } // namespace Logic
 

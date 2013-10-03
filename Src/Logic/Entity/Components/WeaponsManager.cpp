@@ -192,10 +192,13 @@ namespace Logic
 
 			if(_cooldownTimer <= 0) {
 				_cooldownTimer = 0;
-				reduceCooldowns(0);
-				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
-				matMsg->setMaterialName("original");
-				_entity->emitMessage(matMsg);
+				//reduceCooldowns(0);
+				std::shared_ptr<CMessageDamageAmplifier> amplifyMessage = std::make_shared<CMessageDamageAmplifier>();
+				amplifyMessage->setDuration(0);
+				amplifyMessage->setPercentDamage(0);
+				_entity->emitMessage(amplifyMessage);
+
+				
 			}
 		}
 
@@ -204,10 +207,13 @@ namespace Logic
 
 			if(_dmgAmpTimer <= 0) {
 				_dmgAmpTimer = 0;
-				amplifyDamage(0);
-				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
-				matMsg->setMaterialName("original");
-				_entity->emitMessage(matMsg);
+				//amplifyDamage(0);
+				std::shared_ptr<CMessageReducedCooldown> coolDownMessage = std::make_shared<CMessageReducedCooldown>();
+				coolDownMessage->setDuration(0);
+				coolDownMessage->setPercentCooldown(0);
+				_entity->emitMessage(coolDownMessage);
+
+				
 			}
 		}
 	}
@@ -254,9 +260,15 @@ namespace Logic
 			_weaponry[i].second->amplifyDamage(percentage);
 		}
 
-		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
-		matMsg->setMaterialName("ArchangelBerserk");
-		_entity->emitMessage(matMsg);
+		if(!percentage){
+			std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+			matMsg->setMaterialName("ArchangelBerserk");
+			_entity->emitMessage(matMsg);
+		}else{
+			std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+			matMsg->setMaterialName("original");
+			_entity->emitMessage(matMsg);
+		}
 	}
 
 	//---------------------------------------------------------
@@ -266,9 +278,16 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->reduceCooldown(percentage);
 		}
-		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
-		matMsg->setMaterialName("ArchangelAzul");
-		_entity->emitMessage(matMsg);
+
+		if(!percentage){
+			std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+			matMsg->setMaterialName("ArchangelAzul");
+			_entity->emitMessage(matMsg);
+		}else{
+			std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+			matMsg->setMaterialName("original");
+			_entity->emitMessage(matMsg);
+		}
 	}
 
 	//---------------------------------------------------------

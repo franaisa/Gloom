@@ -52,12 +52,15 @@ namespace Logic {
 	void CCoolDownClient::spell(){ 
 		// feedback de cooldown reducio
 		Graphics::CServer::getSingletonPtr()->getActiveScene()->createCompositor("ColdDownCompositor");
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->setCompositorVisible("ColdDownCompositor",true);
 	} // spell
 	//__________________________________________________________________
 		
 	void CCoolDownClient::stopSpell() { 
 		// fin feedback de cooldown reducio
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->setCompositorVisible("ColdDownCompositor",false);
 		Graphics::CServer::getSingletonPtr()->getActiveScene()->destroyCompositor("ColdDownCompositor");
+		
 	} // stopSpell
 	//__________________________________________________________________
 
