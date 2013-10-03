@@ -15,6 +15,8 @@ de disparo de la cabra.
 #include "HudWeapons.h"
 #include "DynamicLight.h"
 
+#include "Audio/Server.h"
+
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
@@ -44,7 +46,9 @@ namespace Logic {
 										  _dispersion(0),
 										  _dispersionOriginal(0),
 										  _iContadorLeftClicked(0),
-										  _bMensajeDispMandado(false){
+										  _bMensajeDispMandado(false),
+										  _soundRate(75),
+										  _soundTimer(_soundRate) {
 		// Nada que hacer
 	}
 
@@ -114,6 +118,7 @@ namespace Logic {
 		printf("\n para de emitir");
 
 		_currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem")->setVisible(false);
+		_soundTimer = _soundRate;
 	}
 
 	//__________________________________________________________________
@@ -140,6 +145,7 @@ namespace Logic {
 		//emitParticle2(false);
 
 		_currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem")->setVisible(false);
+		Audio::CServer::getSingletonPtr()->playSound("weapons/minigun/shoot.wav");
 	}
 
 	//__________________________________________________________________
@@ -147,6 +153,13 @@ namespace Logic {
 	void CMiniGunFeedback::onFixedTick(unsigned int msecs){
 		if(_primaryFireIsActive) {
 			flashAnim();
+
+			_soundTimer -= msecs;
+			if(_soundTimer < 0) {
+				_soundTimer = _soundRate;
+
+				Audio::CServer::getSingletonPtr()->playSound("weapons/minigun/shoot.wav");
+			}
 		}
 		
 		/*if(_primaryFireCooldownTimer > 0) {

@@ -253,7 +253,9 @@ namespace Logic {
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
 		for(int i=0;i<hits.size();++i) {
-			if (hits[i].entity->getType() == "PhysicWorld")
+			if (hits[i].entity->getType() == "PhysicWorld"				||
+				hits[i].entity->getType() == "World"					||
+				hits[i].entity->getType() == "PhysicAndGraphicWorld")
 			{
 				//Mandar el mensaje de los decal
 				Vector3 pos = hits[i].impact;
@@ -277,10 +279,6 @@ namespace Logic {
 					minigunHit->activate();
 					minigunHit->start();
 				}
-
-				int randomValue = Math::unifRand(2);
-				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
-				Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits[i].impact, Vector3::ZERO, false, false);
 				
 				break;
 			}
@@ -404,7 +402,9 @@ namespace Logic {
 		CEntity* touched = NULL;
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			std::string typeEntity = it->entity->getType();
-			if( typeEntity == "PhysicWorld" ) {
+			if( typeEntity == "PhysicWorld"				||
+				typeEntity == "World"					||
+				typeEntity == "PhysicAndGraphicWorld") {
 				//Mandar el mensaje de los decal
 				Vector3 pos = it->impact;
 				drawDecal(it->entity, it->impact, (int)WeaponType::eMINIGUN);
@@ -420,10 +420,6 @@ namespace Logic {
 					minigunHit->activate();
 					minigunHit->start();
 				}
-
-				int randomValue = Math::unifRand(2);
-				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
-				Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, it->impact, Vector3::ZERO, false, false);
 
 				break;
 			}

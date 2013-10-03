@@ -107,7 +107,9 @@ namespace Logic {
 		bool targetHit = false;
 		for (auto it = hits.begin(); it < hits.end(); ++it){
 			//Si tocamos el mundo no continuamos viendo hits
-			if((*it).entity->getType().compare("PhysicWorld")==0){
+			if( it->entity->getType() == "PhysicWorld"				||
+				it->entity->getType() == "World"					||
+				it->entity->getType() == "PhysicAndGraphicWorld"){
 				Euler euler(Quaternion::IDENTITY);
 				euler.setDirection(it->normal);
 				euler.yaw( Ogre::Radian(Math::HALF_PI) );

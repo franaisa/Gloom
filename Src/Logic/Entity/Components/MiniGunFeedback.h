@@ -68,9 +68,12 @@ namespace Logic {
 		virtual void stopSecondaryFire();
 
 		//__________________________________________________________________
-		virtual void onFixedTick(unsigned int msecs);
+		
 
 	protected:
+
+		virtual void onActivate() { _soundTimer = _soundRate; }
+		virtual void onFixedTick(unsigned int msecs);
 
 		void flashAnim();
 
@@ -96,6 +99,9 @@ namespace Logic {
 		*/
 		bool _bMensajeDispMandado;
 		bool _firingRound;
+
+		unsigned int _soundRate;
+		int _soundTimer;
 	};
 
 	REG_FACTORY(CMiniGunFeedback);
