@@ -245,24 +245,23 @@ namespace Logic {
 	void IWeaponFeedback::emitParticle2(bool primaryShoot){
 		printf("\n a emitir");
 		if(_currentParticle){
-			printf("\n ya emitiendo");
 			std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 			activateMsg->setActivated(true);
 			_currentParticle->emitMessage(activateMsg);
-		}
-				
-		_currentParticle = CEntityFactory::getSingletonPtr()->createEntity(
+		}else{
+			_currentParticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
 			Logic::CServer::getSingletonPtr()->getMap());
 
-		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
-		CDynamicParticleSystem * particleComp = _currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+			Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
+			CDynamicParticleSystem * particleComp = _currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
 		
-		particleComp->setGraphicParent(graphicWeapon);
-		particleComp->setOffset(_particlePosition);
+			particleComp->setGraphicParent(graphicWeapon);
+			particleComp->setOffset(_particlePosition);
 
-		_currentParticle->activate();
-		_currentParticle->start();
+			_currentParticle->activate();
+			_currentParticle->start();
+		}
 	} // emitParticle2
 	
 } // namespace Logic

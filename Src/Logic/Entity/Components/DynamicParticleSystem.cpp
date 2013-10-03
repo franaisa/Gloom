@@ -85,7 +85,13 @@ namespace Logic {
 			_particleSystem->setPosition( _entity->getPosition() + _offset );
 			_particleSystem->setOrientation( _entity->getOrientation() );
 		}
+	} // onTick
+	//______________________________________________________________________________
+
+	void CDynamicParticleSystem::setVisible(bool visible) {
+		_particleSystem->setVisible(visible);
 	}
+
 
 } // namespace Logic
 
