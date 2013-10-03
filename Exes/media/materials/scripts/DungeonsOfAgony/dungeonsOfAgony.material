@@ -22,21 +22,15 @@ material esferasdelampara_mtl[esferasdelampara] {
 			}
 		}
 	}
-	technique{
-		pass{
-			texture_unit {
-				texture magma_GLOW.tga
-			}
-		}
-	}
-	technique {
+	
+	/*technique {
 		scheme glow
 		pass {
 			lighting off
 			texture_unit {
 				texture magma_GLOW.tga
 			}
-		}
+		}*/
 		
 	}
 }

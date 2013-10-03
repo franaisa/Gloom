@@ -1,13 +1,5 @@
 Map = {
 
-	Player = {
-		type = "LocalHound",
-		isPlayer = true,
-		position = {0, 5, 0},
-		physic_group = 1,
-		physic_groupList = "-1",
-	},
-	
 	PhysicWorld = {
 		type = "PhysicWorld",
 	},
@@ -1004,7 +996,6 @@ Map = {
 		rotation = "0.500000 0.500000 -0.500000 -0.500000",
 		static = true,
 	},
-	
 	SpawnPoint1 = {
 		type = "SpawnPoint",
 		position = {-348.442, 198.219, 196.188},
@@ -1069,5 +1060,4 @@ Map = {
 		type = "SpawnPoint",
 		position = {132.19, 114.358, 251.652},
 	},
-	
 }

@@ -1,13 +1,5 @@
 Map = {
 
-	Player = {
-		type = "LocalHound",
-		isPlayer = true,
-		position = {0, 5, 0},
-		physic_group = 1,
-		physic_groupList = "-1",
-	},
-	
 	PhysicWorld = {
 		type = "PhysicWorld",
 	},
@@ -1004,5 +996,5 @@ Map = {
 		rotation = "0.500000 0.500000 -0.500000 -0.500000",
 		static = true,
 	},
-	
+
 }
