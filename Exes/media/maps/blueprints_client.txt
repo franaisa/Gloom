@@ -29,7 +29,7 @@ Vortice CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 SpikeTrap CAudio CGraphics
 Spike CGraphics CPositionInterpolator
-Light CLight CGraphics
+Light CLight
 MovableLight CDynamicLight CGraphics
 TriggerLight CLight CGraphics CPhysicStaticCompound
 DamageAmplifier CFloatingMovement CAudio CDynamicParticleSystem

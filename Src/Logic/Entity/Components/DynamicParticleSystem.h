@@ -31,6 +31,7 @@ namespace Logic {
 		void setOffset(const Vector3& offset);
 		void setGraphicParent(Graphics::CEntity* parent);
 
+		void setVisible(bool visible);
 	protected:
 
 		virtual void onStart();

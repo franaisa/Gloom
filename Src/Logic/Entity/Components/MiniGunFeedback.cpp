@@ -25,6 +25,8 @@ de disparo de la cabra.
 #include "Logic/Messages/MessageParticleStop.h"
 #include "Logic/Messages/MessageActivate.h"
 
+#include "DynamicParticleSystem.h"
+
 
 using namespace std;
 
@@ -83,6 +85,8 @@ namespace Logic {
 		_firingRound = _primaryFireIsActive = true;
 
 		emitParticle2();
+
+		_currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem")->setVisible(true);
 	}
 
 	//__________________________________________________________________
@@ -108,12 +112,14 @@ namespace Logic {
 		activateMsg->setActivated(false);
 		_currentParticle->emitMessage(activateMsg);
 		printf("\n para de emitir");
+
+		_currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem")->setVisible(false);
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGunFeedback::secondaryFire() {
-		_hudWeapon->loadingWeapon(true);
+		_hudWeapon->loadingWeapon(true);		
 	}
 	//__________________________________________________________________
 	
@@ -131,7 +137,9 @@ namespace Logic {
 		shootFlash->setRange(325.0f);
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 
-		emitParticle2(false);
+		//emitParticle2(false);
+
+		_currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem")->setVisible(false);
 	}
 
 	//__________________________________________________________________
