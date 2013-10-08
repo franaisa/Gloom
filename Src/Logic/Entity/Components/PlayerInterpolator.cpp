@@ -23,6 +23,7 @@
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 using namespace std;
 
@@ -125,6 +126,8 @@ namespace Logic {
 		vector<AudioInfo> tempAudioBuffer = snapshotMsg->getAudioBuffer();
 		_audioBuffer.insert( _audioBuffer.end(), tempAudioBuffer.begin(), tempAudioBuffer.end() );
 
+		vector<WeaponInfo> tempWeaponBuffer = snapshotMsg->getWeaponBuffer();
+		_weaponBuffer.insert ( _weaponBuffer.end(), tempWeaponBuffer.begin(), tempWeaponBuffer.end() );
 		// Si hemos perdido ticks, los descartamos del buffer
 		if(_lostTicks > 0) {
 			// Comprobamos el buffer de transforms
@@ -205,6 +208,13 @@ namespace Logic {
 
 					_entity->emitMessage(audioMsg);
 				}
+			}
+
+			if ( !_weaponBuffer.empty() && _weaponBuffer.front().tick == _tickCounter ) {
+				WeaponInfo info = _weaponBuffer.front();
+				shared_ptr<CMessageChangeWeaponGraphics> weaponMsg = make_shared<CMessageChangeWeaponGraphics>();
+				weaponMsg->setWeapon(info.weapon);
+				_entity->emitMessage(weaponMsg);
 			}
 
 			_tickCounter = (_tickCounter + 1) % _ticksPerBuffer;

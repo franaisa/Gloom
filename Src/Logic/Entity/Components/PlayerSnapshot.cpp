@@ -13,6 +13,7 @@
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "Logic/Maps/WorldState.h"
 
@@ -50,8 +51,9 @@ namespace Logic {
 		TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::SET_ANIMATION	|| 
-			   msgType == Message::STOP_ANIMATION	||
-			   msgType == Message::AUDIO;
+			   msgType == Message::STOP_ANIMATION		||
+			   msgType == Message::AUDIO						||
+			   msgType == Message::CHANGE_WEAPON_GRAPHICS;
 	}
 
 	//__________________________________________________________________
@@ -107,6 +109,13 @@ namespace Logic {
 
 				break;
 			}
+			case Message::CHANGE_WEAPON_GRAPHICS:{
+				shared_ptr<CMessageChangeWeaponGraphics> weaponMsg = static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				WeaponInfo info;
+				info.weapon = weaponMsg->getWeapon();
+				info.tick = _tickCounter;
+				_weaponBuffer.push_back(info);
+			}
 		}
 	}
 
@@ -126,6 +135,7 @@ namespace Logic {
 		snapshotMsg->setTransformBuffer(_transformBuffer);
 		snapshotMsg->setAnimationBuffer(_animationBuffer);
 		snapshotMsg->setAudioBuffer(_audioBuffer);
+		snapshotMsg->setWeaponBuffer(_weaponBuffer);
 		_entity->emitMessage(snapshotMsg);
 
 		// Limpiar el buffer para la siguiente snapshot

@@ -82,7 +82,7 @@ namespace Logic {
 		std::vector<Matrix4>	_transformBuffer;
 		std::vector<AnimInfo>	_animationBuffer;
 		std::vector<AudioInfo>	_audioBuffer;
-
+		std::vector<WeaponInfo> _weaponBuffer;
 	}; // class CPlayerSnapshot
 
 	REG_FACTORY(CPlayerSnapshot);

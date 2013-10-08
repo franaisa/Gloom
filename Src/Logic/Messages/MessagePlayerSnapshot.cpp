@@ -52,6 +52,18 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	vector<WeaponInfo> CMessagePlayerSnapshot::getAudioBuffer() {
+		return _weaponBuffer;
+	}
+
+	//__________________________________________________________________
+
+	void CMessagePlayerSnapshot::setAudioBuffer(const std::vector<WeaponInfo> &buffer) {
+		_weaponBuffer = buffer;
+	}
+
+	//__________________________________________________________________
+
 	std::vector<AudioInfo> CMessagePlayerSnapshot::getAudioBuffer() {
 		return _audioBuffer;
 	}
@@ -60,7 +72,7 @@ namespace Logic {
 		
 	Net::CBuffer CMessagePlayerSnapshot::serialize() {
 		// Tamaño igual = cabecera(int) + tambuffer(int) + num matrices (5 floats * tamBuffer)
-		unsigned int transformBufferSize( _transformBuffer.size() ), animationBufferSize( _animationBuffer.size() ), audioBufferSize( _audioBuffer.size() );
+		unsigned int transformBufferSize( _transformBuffer.size() ), animationBufferSize( _animationBuffer.size() ), audioBufferSize( _audioBuffer.size() ), weaponBufferSize( _weaponBuffer.size() );
 		// Para mandar una ristra de booleanos usaremos un unico byte
 		unsigned char booleanMask;
 
@@ -108,13 +120,19 @@ namespace Logic {
 			buffer.write( &booleanMask, sizeof(booleanMask) );
 		}
 
+		buffer.serialize(weaponBufferSize);
+		for(unsigned int i = 0; i < weaponBufferSize; ++i) {
+			buffer.serialize(_weaponBuffer[i].tick);
+			buffer.serialize(_weaponBuffer[i].weapon);
+		}
+
 		return buffer;
 	}
 
 	//__________________________________________________________________
 
 	void CMessagePlayerSnapshot::deserialize(Net::CBuffer& buffer) {
-		int transformBufferSize, animationBufferSize, audioBufferSize;
+		int transformBufferSize, animationBufferSize, audioBufferSize, weaponBufferSize;
 		unsigned char booleanMask;
 		// Deserializar el tamaño del buffer
 		buffer.deserialize(transformBufferSize);
@@ -161,6 +179,13 @@ namespace Logic {
 			_audioBuffer[i].play3d		= booleanMask & (1 << 1);
 			_audioBuffer[i].streamSound	= booleanMask & (1 << 2);
 			_audioBuffer[i].stopSound	= booleanMask & (1 << 3);
+		}
+
+		buffer.deserialize(weaponBufferSize);
+		_weaponBufferSize.resize(weaponBufferSize);
+		for(unsigned int i = 0; i < weaponBufferSize; ++i) {
+			buffer.deserialize(_weaponBuffer[i].tick);
+			buffer.deserialize(_weaponBuffer[i].weapon);
 		}
 	}
 

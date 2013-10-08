@@ -23,6 +23,12 @@ namespace Logic {
 		bool stopSound;
 	};
 
+	struct WeaponInfo{
+		int weapon;
+		unsigned int tick;
+	};
+
+
 	// No heredo de CMessageTransformSnapshot porque me
 	// da problemillas con el constructor (por querer hacer un bypass
 	// y llamar a CMessage directamente)
@@ -41,12 +47,16 @@ namespace Logic {
 		void setAudioBuffer(const std::vector<AudioInfo>& buffer);
 		std::vector<AudioInfo> getAudioBuffer();
 
+		void setWeaponBuffer( const std::vector<WeaponInfo> &weaponBuffer );
+		std::vector<WeaponInfo> getWeaponBuffer();
+
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 std::vector<Matrix4> _transformBuffer;
 		 std::vector<AnimInfo> _animationBuffer;
 		 std::vector<AudioInfo> _audioBuffer;
+		 std::vector<WeaponInfo> _weaponBuffer;
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerSnapshot);
 };
