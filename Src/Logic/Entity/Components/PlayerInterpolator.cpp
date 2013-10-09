@@ -112,6 +112,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerInterpolator::storeSnapshot(const shared_ptr<CMessagePlayerSnapshot>& snapshotMsg) {
+		//no queremos que se nos acumulen los samples, asi que limpiamos todos menos el primero
+		//(para que la interpolacion haga el resto
+		if(_transformBuffer.size()>1){
+			_transformBuffer.erase(_transformBuffer.begin() + 1, _transformBuffer.end());
+		}
 		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
 
 		if(_connecting) {
@@ -119,7 +124,8 @@ namespace Logic {
 			if(_transformBuffer.size() == 2 * _ticksPerBuffer)
 				_connecting = false;
 		}
-
+		
+		
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
 
@@ -161,8 +167,7 @@ namespace Logic {
 
 			Matrix4 newTransform = _transformBuffer.front();
 			Vector3 newPosition = newTransform.getTrans();
-
-			_extrapolatedMotion = newPosition - _entity->getPosition();
+			_extrapolatedMotion = (newPosition - _entity->getPosition())*0.5f;
 
 			_controller->setPhysicPosition( newPosition );
 			_entity->setOrientation( newTransform.extractQuaternion() );

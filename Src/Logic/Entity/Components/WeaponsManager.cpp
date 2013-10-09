@@ -242,11 +242,6 @@ namespace Logic
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 
-			// Mandamos un mensaje para actualizar el grafico
-			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
-			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
-			_entity->emitMessage(chgWpnGraphicsMsg);
-			Logic::CWorldState::getSingletonPtr()->addChange(_entity,chgWpnGraphicsMsg);
 
 		}
 		

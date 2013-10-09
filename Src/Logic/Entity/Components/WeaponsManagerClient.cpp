@@ -197,9 +197,9 @@ namespace Logic
 			_currentWeapon = newWeapon;
 			
 			// Mandamos un mensaje para actualizar el HUD
-			/*std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
+			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
 			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
-			_entity->emitMessage(chgWpnGraphicsMsg);*/
+			_entity->emitMessage(chgWpnGraphicsMsg);
 		}
 		
 	}
