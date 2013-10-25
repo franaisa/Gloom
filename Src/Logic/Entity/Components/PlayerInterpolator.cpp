@@ -78,7 +78,7 @@ namespace Logic {
 	void CPlayerInterpolator::interpolateSnapshot(const vector<Matrix4>& buffer) {
 		Matrix4 incrementMatrix, temp;
 		unsigned int bufferSize = buffer.size();
-		
+
 		// Interpolamos las posiciones intermedias del buffer
 		for(int i = 0; i < bufferSize - 1; ++i) {
 			// Insertamos la posicion inicial
@@ -112,16 +112,21 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerInterpolator::storeSnapshot(const shared_ptr<CMessagePlayerSnapshot>& snapshotMsg) {
-		//no queremos que se nos acumulen los samples, asi que limpiamos todos menos el primero
+		//no queremos que se nos <acumulen los samples, asi que limpiamos todos menos el primero
 		//(para que la interpolacion haga el resto
-		if(_transformBuffer.size()>1){
-			_transformBuffer.erase(_transformBuffer.begin() + 1, _transformBuffer.end());
-		}
+		/*if(_transformBuffer.size()>_ticksPerBuffer + 1){
+			_transformBuffer.erase(_transformBuffer.begin(), _transformBuffer.begin() + (_transformBuffer.size() - _ticksPerBuffer +1 ));
+		}*/
 		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
+
+		while (!_transformBuffer.empty() && _transformBuffer.size()>_ticksPerBuffer*2 ){
+			_transformBuffer.pop_front();
+		}
 
 		if(_connecting) {
 			// Preparamos el buffer doble
-			if(_transformBuffer.size() == 2 * _ticksPerBuffer)
+			std::cout << "transform buffer size = " << _transformBuffer.size() << std::endl;
+			if(_transformBuffer.size() >= 2 * _ticksPerBuffer)
 				_connecting = false;
 		}
 		
@@ -134,20 +139,6 @@ namespace Logic {
 
 		vector<WeaponInfo> tempWeaponBuffer = snapshotMsg->getWeaponBuffer();
 		_weaponBuffer.insert ( _weaponBuffer.end(), tempWeaponBuffer.begin(), tempWeaponBuffer.end() );
-		// Si hemos perdido ticks, los descartamos del buffer
-		if(_lostTicks > 0) {
-			// Comprobamos el buffer de transforms
-			unsigned int transformBufferSize = _transformBuffer.size();
-
-			if( _lostTicks >= transformBufferSize ) {
-				_transformBuffer.clear();
-				_lostTicks -= transformBufferSize;
-			}
-			else {
-				_transformBuffer.erase( _transformBuffer.begin(), _transformBuffer.begin() + _lostTicks );
-				_lostTicks = 0;
-			}
-		}
 	}
 
 	//__________________________________________________________________
@@ -229,10 +220,9 @@ namespace Logic {
 			// tendremos que descartar estos ticks del siguiente buffer
 			// recibido
 			if(!_connecting) {
-				++_lostTicks;
-				
-				if( _extrapolatedTicks < 2 ) {
-					Vector3 newPosition = _entity->getPosition() + _extrapolatedMotion;
+				if( _extrapolatedTicks < _ticksPerBuffer ) {
+					std::cout << "perdiendo ticks"+ _lostTicks << std::endl;
+					Vector3 newPosition = _entity->getPosition() + _extrapolatedMotion * 0.5f;
 					Physics::CapsuleGeometry controllerGeometry = Physics::CapsuleGeometry( _controller->getCapsuleRadius(), _controller->getCapsuleHeight() / 2.0f );
 
 					if( !Physics::CServer::getSingletonPtr()->overlapAny( controllerGeometry, newPosition ) ) {

@@ -52,13 +52,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	vector<WeaponInfo> CMessagePlayerSnapshot::getAudioBuffer() {
+	vector<WeaponInfo> CMessagePlayerSnapshot::getWeaponBuffer() {
 		return _weaponBuffer;
 	}
 
 	//__________________________________________________________________
 
-	void CMessagePlayerSnapshot::setAudioBuffer(const std::vector<WeaponInfo> &buffer) {
+	void CMessagePlayerSnapshot::setWeaponBuffer(const std::vector<WeaponInfo> &buffer) {
 		_weaponBuffer = buffer;
 	}
 
@@ -182,7 +182,7 @@ namespace Logic {
 		}
 
 		buffer.deserialize(weaponBufferSize);
-		_weaponBufferSize.resize(weaponBufferSize);
+		_weaponBuffer.resize(weaponBufferSize);
 		for(unsigned int i = 0; i < weaponBufferSize; ++i) {
 			buffer.deserialize(_weaponBuffer[i].tick);
 			buffer.deserialize(_weaponBuffer[i].weapon);
