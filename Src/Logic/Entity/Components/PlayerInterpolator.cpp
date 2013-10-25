@@ -114,9 +114,6 @@ namespace Logic {
 	void CPlayerInterpolator::storeSnapshot(const shared_ptr<CMessagePlayerSnapshot>& snapshotMsg) {
 		//no queremos que se nos <acumulen los samples, asi que limpiamos todos menos el primero
 		//(para que la interpolacion haga el resto
-		/*if(_transformBuffer.size()>_ticksPerBuffer + 1){
-			_transformBuffer.erase(_transformBuffer.begin(), _transformBuffer.begin() + (_transformBuffer.size() - _ticksPerBuffer +1 ));
-		}*/
 		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
 
 		while (!_transformBuffer.empty() && _transformBuffer.size()>_ticksPerBuffer*2 ){
@@ -130,15 +127,63 @@ namespace Logic {
 				_connecting = false;
 		}
 		
+		if (!_animationBuffer.empty()){
+			AnimInfo info = _animationBuffer.back();
+			_animationBuffer.pop_back();
+
+			// Emitimos el mensaje de animación
+			if(info.stop) {
+				// Mandar animación de stop
+				shared_ptr<CMessageStopAnimation> stopAnimMsg = make_shared<CMessageStopAnimation>();
+				stopAnimMsg->setString(info.animName);
+				_entity->emitMessage(stopAnimMsg);
+			}else {
+				// Mandar set animation
+				shared_ptr<CMessageSetAnimation> setAnimMsg = make_shared<CMessageSetAnimation>();
+				setAnimMsg->setAnimation(info.animName);
+				setAnimMsg->setLoop(info.loop);
+				setAnimMsg->setExclude(info.exclude);
+				setAnimMsg->setRewind(info.rewind);
+				_entity->emitMessage(setAnimMsg);
+			}
+			_animationBuffer.clear();
+		}
 		
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
 
+		if(!_audioBuffer.empty()){
+			AudioInfo info = _audioBuffer.back();
+			_audioBuffer.pop_front();
+
+			shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
+			audioMsg->setAudioName(info.audioName);
+			audioMsg->isLoopable(info.loopSound);
+			audioMsg->is3dSound(info.play3d);
+			audioMsg->streamSound(info.streamSound);
+			audioMsg->stopSound(info.stopSound);
+
+			_entity->emitMessage(audioMsg);
+			_audioBuffer.clear();
+		}
 		vector<AudioInfo> tempAudioBuffer = snapshotMsg->getAudioBuffer();
 		_audioBuffer.insert( _audioBuffer.end(), tempAudioBuffer.begin(), tempAudioBuffer.end() );
 
+
+		if(!_weaponBuffer.empty()){
+			WeaponInfo info = _weaponBuffer.back();
+			shared_ptr<CMessageChangeWeaponGraphics> weaponMsg = make_shared<CMessageChangeWeaponGraphics>();
+			weaponMsg->setWeapon(info.weapon);
+			_entity->emitMessage(weaponMsg);
+			_weaponBuffer.clear();
+		}
+
+		
 		vector<WeaponInfo> tempWeaponBuffer = snapshotMsg->getWeaponBuffer();
 		_weaponBuffer.insert ( _weaponBuffer.end(), tempWeaponBuffer.begin(), tempWeaponBuffer.end() );
+
+		//reiniciamos el contador cada vez que recibimos una snapshot para que no haya marrones
+		_tickCounter = 0;
 	}
 
 	//__________________________________________________________________
@@ -208,6 +253,7 @@ namespace Logic {
 
 			if ( !_weaponBuffer.empty() && _weaponBuffer.front().tick == _tickCounter ) {
 				WeaponInfo info = _weaponBuffer.front();
+				_weaponBuffer.pop_front();
 				shared_ptr<CMessageChangeWeaponGraphics> weaponMsg = make_shared<CMessageChangeWeaponGraphics>();
 				weaponMsg->setWeapon(info.weapon);
 				_entity->emitMessage(weaponMsg);
