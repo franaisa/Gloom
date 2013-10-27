@@ -142,6 +142,7 @@ namespace Logic {
 		_transformBuffer.clear();
 		_animationBuffer.clear();
 		_audioBuffer.clear();
+		_weaponBuffer.clear();
 	}
 
 	//__________________________________________________________________
