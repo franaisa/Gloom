@@ -17,6 +17,9 @@
     <ClCompile Include="..\..\Src\BaseSubsystems\simplexnoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\BaseSubsystems\LoadingBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\BaseSubsystems\Documentation.h">
@@ -35,6 +38,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\BaseSubsystems\Euler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\BaseSubsystems\LoadingBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

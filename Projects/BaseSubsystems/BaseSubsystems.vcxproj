@@ -77,6 +77,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\BaseSubsystems\LoadingBar.cpp" />
     <ClCompile Include="..\..\Src\BaseSubsystems\Server.cpp" />
     <ClCompile Include="..\..\Src\BaseSubsystems\simplexnoise.cpp" />
   </ItemGroup>
@@ -84,6 +85,7 @@
     <ClInclude Include="..\..\Src\BaseSubsystems\Documentation.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Euler.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Factory.h" />
+    <ClInclude Include="..\..\Src\BaseSubsystems\LoadingBar.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Math.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Server.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\simplexnoise.h" />

@@ -169,7 +169,8 @@ namespace Math
 	*/
 	static Quaternion setQuaternion(float yaw, float pitch, float roll )
 	{
-	  Quaternion qy( cos(yaw/2.0f), 0, sin(yaw/2.0f),0);
+	  
+		Quaternion qy( cos(yaw/2.0f), 0, sin(yaw/2.0f),0);
       Quaternion qp( cos(pitch/2.0f), sin(pitch/2.0f), 0, 0);
       Quaternion qr( cos(roll/2.0f), 0, 0, sin(roll/2.0f) );
 	  Quaternion q;
@@ -187,6 +188,7 @@ namespace Math
 	static Vector3 getEulerYawPitchRoll(const Quaternion& quaternion)
 	{
 		Ogre::Radian mPitch,mRoll,mYaw;
+		quaternion.getPitch();
 		mYaw = Ogre::Math::ATan2(2 * quaternion.y * quaternion.w - 2 * quaternion.x * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.y, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
 		mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
 		mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
@@ -217,7 +219,7 @@ namespace Math
 	*/
 	static Quaternion getYawQuaternion(const Quaternion& quaternion)
 	{
-		Ogre::Radian mYaw = Ogre::Math::ATan2(2 * quaternion.y * quaternion.w - 2 * quaternion.x * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.y, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		Ogre::Radian mYaw = quaternion.getYaw();
 		return Quaternion(cos(mYaw.valueRadians()/2.0f), 0, sin(mYaw.valueRadians()/2.0f),0);
 	}
 
@@ -230,7 +232,7 @@ namespace Math
 	*/
 	static Quaternion getPitchQuaternion(const Quaternion& quaternion)
 	{
-		Ogre::Radian mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		Ogre::Radian mPitch = quaternion.getPitch();
 		return Quaternion(cos(mPitch.valueRadians()/2.0f), sin(mPitch.valueRadians()/2.0f), 0, 0);
 	}
 
@@ -243,7 +245,7 @@ namespace Math
 	*/
 	static Quaternion getRollQuaternion(const Quaternion& quaternion)
 	{
-		Ogre::Radian mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
+		Ogre::Radian mRoll = quaternion.getRoll();
 		return Quaternion(cos(mRoll.valueRadians()/2.0f), 0, sin(mRoll.valueRadians()/2.0f),0);
 	}
 
@@ -256,9 +258,12 @@ namespace Math
 	@param rotation Radianes que rotaremos.
 	@param quaternion Quaternion que será rotado.
 	*/
-	static inline void rotate(const Vector3 &axe, Ogre::Radian rotation, Quaternion &quaternion ){
-		Quaternion q(rotation,axe);
-		quaternion=quaternion*q;
+	static void rotate(const Vector3 &axis, Ogre::Radian angle, Quaternion &quaternion ){
+		Quaternion q;
+		q.FromAngleAxis(angle,axis);
+		Quaternion qnorm = q;
+		qnorm.normalise();
+		quaternion = qnorm * quaternion;
 	}
 
 
@@ -320,6 +325,25 @@ namespace Math
 		Ogre::Radian yaw, pitch, roll;
 		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		return yaw.valueRadians();
+
+	} // getYaw
+
+	static float getYaw(const Quaternion& quaternion) 
+	{
+		return quaternion.getYaw().valueRadians();
+
+	} // getYaw
+
+	static float getPitch(const Quaternion& quaternion) 
+	{
+		return quaternion.getPitch().valueRadians();
+
+	} // getYaw
+
+
+	static float getRoll(const Quaternion& quaternion) 
+	{
+		return quaternion.getRoll().valueRadians();
 
 	} // getYaw
 	
@@ -531,6 +555,33 @@ namespace Math
 
 	} // pitch
 
+
+	static void yaw(float turn, Quaternion &quaternion)
+	{
+		Vector3 axis;
+
+		// Rotate around local Y axis
+		axis = quaternion * Vector3::UNIT_Y;
+		rotate(axis, Ogre::Radian(turn), quaternion);
+	}
+
+	static void pitch(float turn, Quaternion &quaternion)
+	{
+		Vector3 axis;
+
+		// Rotate around local Y axis
+		axis = quaternion * Vector3::UNIT_X;
+		rotate(axis, Ogre::Radian(turn), quaternion);
+	}
+
+	static void roll(float turn, Quaternion &quaternion)
+	{
+		Vector3 axis;
+
+		// Rotate around local Y axis
+		axis = quaternion * Vector3::UNIT_Z;
+		rotate(axis, Ogre::Radian(turn), quaternion);
+	}
 
 	/**
 	Establece un subviraje a una matriz de transformación.

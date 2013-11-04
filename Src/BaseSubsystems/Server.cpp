@@ -229,24 +229,23 @@ namespace BaseSubsystems
 		paramList.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 		
 #if defined NON_EXCLUSIVE_MODE_IN_WINDOW_MODE
-		// Si estamos en modo ventana no queremos ratón y teclado en modo exclusivo,
-		// queremos que las demás aplicaciones puedan usarlo.
-		if(!_renderWindow->isFullScreen())
-		{
+                // Si estamos en modo ventana no queremos ratón y teclado en modo exclusivo,
+                // queremos que las demás aplicaciones puedan usarlo.
+                if(!_renderWindow->isFullScreen())
+                {
 #if defined OIS_WIN32_PLATFORM 
-			paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_FOREGROUND" ))); 
-			paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_NONEXCLUSIVE"))); 
-			paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND"))); 
-			paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE"))); 
+                        paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_FOREGROUND" ))); 
+                        paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_NONEXCLUSIVE"))); 
+                        paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND"))); 
+                        paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE"))); 
 #elif defined OIS_LINUX_PLATFORM 
-			paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false"))); 
-			paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false"))); 
-			paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false"))); 
-			paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true"))); 
+                        paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false"))); 
+                        paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false"))); 
+                        paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false"))); 
+                        paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true"))); 
 #endif 
-		}
+                }
 #endif 
-
 		// Creamos el sistema de entrada
 		try
 		{

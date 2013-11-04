@@ -26,6 +26,7 @@ Contiene la implementación del estado de menú.
 #include <direct.h>
 
 #include "GUI\Server.h"
+#include "BaseSubsystems\LoadingBar.h"
 
 namespace Application {
 
@@ -98,8 +99,13 @@ namespace Application {
 
 	bool CSelectScenario::keyReleased(Input::TKey key)
 	{
+		switch(key.keyId)
+		{
+		case Input::Key::ESCAPE:
+			_app->setState("menu");
+			break;
+		}
 		return true;
-
 	} // keyReleased
 
 	//--------------------------------------------------------
@@ -133,7 +139,6 @@ namespace Application {
 	Hikari::FlashValue CSelectScenario::loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args){
 		// Inicializar dispatcher para SP
 		Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
-
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
@@ -141,7 +146,6 @@ namespace Application {
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel(args.at(0).getString()+".map"))
 			return false;
-		
 		_app->setState("singlePlayer");
 		return true;
 	}
